@@ -359,3 +359,40 @@ if (backPortal) {
 console.log('%c👨‍💻 + 🎨 = ✨', 'font-size: 24px; font-weight: bold; background: linear-gradient(to right, #a8c9d1, #c9a961); -webkit-background-clip: text; color: transparent;');
 console.log('%cWelcome to the intersection of code and creativity!', 'font-size: 14px; color: #a8c9d1;');
 console.log('%cData by day, canvas by night.', 'font-size: 14px; color: #c9a961; font-style: italic;');
+
+// Image Lightbox functionality
+function openLightbox(imageSrc) {
+    const modal = document.getElementById('lightboxModal');
+    const modalImg = document.getElementById('lightboxImage');
+    
+    modal.classList.add('active');
+    modalImg.src = imageSrc;
+    
+    // Prevent body scroll when lightbox is open
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    const modal = document.getElementById('lightboxModal');
+    modal.classList.remove('active');
+    
+    // Re-enable body scroll
+    document.body.style.overflow = 'auto';
+}
+
+// Close lightbox when clicking outside the image
+const lightboxModal = document.getElementById('lightboxModal');
+if (lightboxModal) {
+    lightboxModal.addEventListener('click', function(e) {
+        if (e.target === lightboxModal || e.target.classList.contains('lightbox-close')) {
+            closeLightbox();
+        }
+    });
+}
+
+// Close lightbox with Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeLightbox();
+    }
+});
