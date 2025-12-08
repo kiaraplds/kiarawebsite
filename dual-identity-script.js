@@ -100,9 +100,28 @@ function openSkillPopup(skillType, clickedElement) {
         // Get the position of the clicked element
         const rect = clickedElement.getBoundingClientRect();
 
-        // Position popup to the right of the clicked item
+        // Calculate position with some padding
+        const leftPosition = rect.right + 20;
+
+        // Check if popup would go off screen to the right
+        const popupWidth = 400; // max-width from CSS
+        const viewportWidth = window.innerWidth;
+
+        let finalLeft = leftPosition;
+
+        // If it goes off screen, position to the left of the button instead
+        if (leftPosition + popupWidth > viewportWidth) {
+            finalLeft = rect.left - popupWidth - 20;
+        }
+
+        // If still off screen (very narrow viewport), center it
+        if (finalLeft < 0) {
+            finalLeft = Math.max(10, (viewportWidth - popupWidth) / 2);
+        }
+
+        // Position popup
         popup.style.top = `${rect.top}px`;
-        popup.style.left = `${rect.right + 20}px`;
+        popup.style.left = `${finalLeft}px`;
 
         popup.classList.add('active');
     }
