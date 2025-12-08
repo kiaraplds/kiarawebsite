@@ -17,7 +17,7 @@
             <div class="center-hero">
                 <h1 class="hero-name">Kiara</h1>
                 <p class="hero-lastname">Polychroniadi</p>
-                <p class="hero-tagline">Choose Your Journey</p>
+                <p class="hero-tagline">Choose how to view my website</p>
             </div>
 
             <!-- Cards Row -->
@@ -50,6 +50,7 @@
 
         <!-- Footer with links -->
         <footer class="footer">
+            <div class="copyright">© 2025 Kiara Polychroniadi</div>
             <div class="social-links">
                 <a href="https://www.linkedin.com/in/kiara-polychroniadi" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -196,136 +197,61 @@
         <!-- Dual gears portal for backward time travel -->
         <div class="portal-gears" id="portalGears">
             <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <!-- Weathered brass gradient -->
-                    <radialGradient id="brassGradient" cx="35%" cy="35%">
-                        <stop offset="0%" style="stop-color:#e6c965;stop-opacity:1" />
-                        <stop offset="40%" style="stop-color:#b8935a;stop-opacity:1" />
-                        <stop offset="80%" style="stop-color:#8a6f3d;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#5d4a28;stop-opacity:1" />
-                    </radialGradient>
-                    <!-- Aged patina -->
-                    <radialGradient id="patinaGradient" cx="50%" cy="50%">
-                        <stop offset="0%" style="stop-color:#7a6240;stop-opacity:0.3" />
-                        <stop offset="100%" style="stop-color:#3d3120;stop-opacity:0.7" />
-                    </radialGradient>
-                </defs>
+                <!-- Background elements (portal circle and glow) -->
+                <g id="portalBackground">
+                    <!-- Portal glow effect (background layer) -->
+                    <circle id="portalGlow" cx="400" cy="300" r="0" fill="#1a1a1a" opacity="0"/>
+                    <!-- Portal opening (glowing circle that expands from center) -->
+                    <circle id="portalCircle" cx="400" cy="300" r="0" fill="none" stroke="#ffb86c" stroke-width="4" opacity="0"/>
+                </g>
 
-                <!-- Right Gear (larger, worn) -->
+                <!-- Right Gear (larger) - 12 uniform teeth - Moved closer to center -->
                 <g id="rightGear">
-                    <!-- Base gear circle -->
-                    <circle cx="550" cy="315" r="120" fill="url(#brassGradient)" stroke="#5d4a28" stroke-width="2"/>
+                    <!-- Main gear body circle -->
+                    <circle cx="480" cy="300" r="80" fill="#5a5a5a"/>
 
-                    <!-- Gear teeth - 12 trapezoid-shaped teeth -->
-                    <g fill="#8a6f3d" stroke="#5d4a28" stroke-width="1.5">
-                        <!-- Tooth 1 (top) -->
-                        <path d="M 542,195 L 538,207 L 562,207 L 558,195 Z"/>
-                        <!-- Tooth 2 -->
-                        <path d="M 601,215 L 595,225 L 613,238 L 619,228 Z"/>
-                        <!-- Tooth 3 -->
-                        <path d="M 645,265 L 636,272 L 648,292 L 657,285 Z"/>
-                        <!-- Tooth 4 (right) -->
-                        <path d="M 663,315 L 654,315 L 654,339 L 663,339 Z"/>
-                        <!-- Tooth 5 -->
-                        <path d="M 645,365 L 636,358 L 648,378 L 657,371 Z"/>
-                        <!-- Tooth 6 -->
-                        <path d="M 601,415 L 595,405 L 613,392 L 619,402 Z"/>
-                        <!-- Tooth 7 (bottom) -->
-                        <path d="M 542,435 L 538,423 L 562,423 L 558,435 Z"/>
-                        <!-- Tooth 8 -->
-                        <path d="M 481,415 L 487,392 L 505,405 L 499,415 Z"/>
-                        <!-- Tooth 9 -->
-                        <path d="M 437,365 L 443,378 L 455,358 L 449,365 Z"/>
-                        <!-- Tooth 10 (left) -->
-                        <path d="M 431,315 L 440,315 L 440,339 L 431,339 Z"/>
-                        <!-- Tooth 11 -->
-                        <path d="M 437,265 L 443,252 L 455,272 L 449,285 Z"/>
-                        <!-- Tooth 12 -->
-                        <path d="M 481,215 L 487,238 L 505,225 L 499,215 Z"/>
-                    </g>
+                    <!-- 12 teeth evenly distributed -->
+                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" transform="rotate(0 480 300)"/>
+                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" transform="rotate(30 480 300)"/>
+                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" transform="rotate(60 480 300)"/>
+                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" transform="rotate(90 480 300)"/>
+                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" transform="rotate(120 480 300)"/>
+                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" transform="rotate(150 480 300)"/>
+                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" transform="rotate(180 480 300)"/>
+                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" transform="rotate(210 480 300)"/>
+                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" transform="rotate(240 480 300)"/>
+                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" transform="rotate(270 480 300)"/>
+                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" transform="rotate(300 480 300)"/>
+                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" transform="rotate(330 480 300)"/>
 
-                    <!-- Wear marks and scratches -->
-                    <circle cx="550" cy="315" r="120" fill="url(#patinaGradient)" opacity="0.4"/>
-
-                    <!-- Inner ring -->
-                    <circle cx="550" cy="315" r="85" fill="#3d3120" stroke="#8a6f3d" stroke-width="3"/>
-
-                    <!-- Cross spokes -->
-                    <line x1="550" y1="230" x2="550" y2="400" stroke="#5d4a28" stroke-width="8" stroke-linecap="round"/>
-                    <line x1="465" y1="315" x2="635" y2="315" stroke="#5d4a28" stroke-width="8" stroke-linecap="round"/>
-
-                    <!-- Diagonal spokes -->
-                    <line x1="490" y1="255" x2="610" y2="375" stroke="#5d4a28" stroke-width="6" stroke-linecap="round"/>
-                    <line x1="610" y1="255" x2="490" y2="375" stroke="#5d4a28" stroke-width="6" stroke-linecap="round"/>
-
-                    <!-- Bolt heads on spokes -->
-                    <circle cx="550" cy="270" r="6" fill="#b8935a" stroke="#3d3120" stroke-width="1.5"/>
-                    <circle cx="550" cy="360" r="6" fill="#b8935a" stroke="#3d3120" stroke-width="1.5"/>
-                    <circle cx="505" cy="315" r="6" fill="#b8935a" stroke="#3d3120" stroke-width="1.5"/>
-                    <circle cx="595" cy="315" r="6" fill="#b8935a" stroke="#3d3120" stroke-width="1.5"/>
-
-                    <!-- Center hub -->
-                    <circle cx="550" cy="315" r="32" fill="url(#brassGradient)" stroke="#5d4a28" stroke-width="3"/>
-                    <circle cx="550" cy="315" r="20" fill="#3d3120" stroke="#8a6f3d" stroke-width="2"/>
-                    <circle cx="550" cy="315" r="8" fill="#5d4a28"/>
+                    <!-- Inner ring for depth -->
+                    <circle cx="480" cy="300" r="55" fill="#3a3a3a"/>
+                    <!-- Center hole -->
+                    <circle cx="480" cy="300" r="28" fill="#2a2a2a"/>
                 </g>
 
-                <!-- Left Gear (smaller, weathered) -->
+                <!-- Left Gear (smaller) - 10 uniform teeth - Moved closer to center -->
                 <g id="leftGear">
-                    <!-- Base gear circle -->
-                    <circle cx="240" cy="305" r="95" fill="url(#brassGradient)" stroke="#5d4a28" stroke-width="2"/>
+                    <!-- Main gear body circle -->
+                    <circle cx="320" cy="300" r="60" fill="#5a5a5a"/>
 
-                    <!-- Gear teeth - 10 trapezoid-shaped teeth -->
-                    <g fill="#8a6f3d" stroke="#5d4a28" stroke-width="1.5">
-                        <!-- Tooth 1 (top) -->
-                        <path d="M 234,210 L 231,220 L 249,220 L 246,210 Z"/>
-                        <!-- Tooth 2 -->
-                        <path d="M 280,225 L 275,233 L 289,246 L 294,238 Z"/>
-                        <!-- Tooth 3 -->
-                        <path d="M 315,260 L 308,266 L 318,281 L 325,275 Z"/>
-                        <!-- Tooth 4 -->
-                        <path d="M 328,295 L 320,297 L 322,313 L 330,311 Z"/>
-                        <!-- Tooth 5 (right) -->
-                        <path d="M 328,330 L 320,332 L 322,348 L 330,346 Z"/>
-                        <!-- Tooth 6 -->
-                        <path d="M 315,365 L 308,359 L 318,374 L 325,368 Z"/>
-                        <!-- Tooth 7 -->
-                        <path d="M 280,390 L 275,382 L 289,369 L 294,377 Z"/>
-                        <!-- Tooth 8 (bottom) -->
-                        <path d="M 234,405 L 231,395 L 249,395 L 246,405 Z"/>
-                        <!-- Tooth 9 -->
-                        <path d="M 188,390 L 193,369 L 207,382 L 202,390 Z"/>
-                        <!-- Tooth 10 (left) -->
-                        <path d="M 152,330 L 160,332 L 158,348 L 150,346 Z"/>
-                    </g>
+                    <!-- 10 teeth evenly distributed -->
+                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" transform="rotate(0 320 300)"/>
+                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" transform="rotate(36 320 300)"/>
+                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" transform="rotate(72 320 300)"/>
+                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" transform="rotate(108 320 300)"/>
+                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" transform="rotate(144 320 300)"/>
+                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" transform="rotate(180 320 300)"/>
+                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" transform="rotate(216 320 300)"/>
+                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" transform="rotate(252 320 300)"/>
+                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" transform="rotate(288 320 300)"/>
+                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" transform="rotate(324 320 300)"/>
 
-                    <!-- Wear marks -->
-                    <circle cx="240" cy="305" r="95" fill="url(#patinaGradient)" opacity="0.4"/>
-
-                    <!-- Inner ring -->
-                    <circle cx="240" cy="305" r="68" fill="#3d3120" stroke="#8a6f3d" stroke-width="2.5"/>
-
-                    <!-- Cross spokes -->
-                    <line x1="240" y1="237" x2="240" y2="373" stroke="#5d4a28" stroke-width="6" stroke-linecap="round"/>
-                    <line x1="172" y1="305" x2="308" y2="305" stroke="#5d4a28" stroke-width="6" stroke-linecap="round"/>
-
-                    <!-- Bolt heads -->
-                    <circle cx="240" cy="270" r="5" fill="#b8935a" stroke="#3d3120" stroke-width="1.5"/>
-                    <circle cx="240" cy="340" r="5" fill="#b8935a" stroke="#3d3120" stroke-width="1.5"/>
-                    <circle cx="205" cy="305" r="5" fill="#b8935a" stroke="#3d3120" stroke-width="1.5"/>
-                    <circle cx="275" cy="305" r="5" fill="#b8935a" stroke="#3d3120" stroke-width="1.5"/>
-
-                    <!-- Center hub -->
-                    <circle cx="240" cy="305" r="26" fill="url(#brassGradient)" stroke="#5d4a28" stroke-width="2.5"/>
-                    <circle cx="240" cy="305" r="16" fill="#3d3120" stroke="#8a6f3d" stroke-width="1.5"/>
-                    <circle cx="240" cy="305" r="6" fill="#5d4a28"/>
+                    <!-- Inner ring for depth -->
+                    <circle cx="320" cy="300" r="40" fill="#3a3a3a"/>
+                    <!-- Center hole -->
+                    <circle cx="320" cy="300" r="22" fill="#2a2a2a"/>
                 </g>
-
-                <!-- Portal opening (glowing circle that expands from center) -->
-                <circle id="portalCircle" cx="400" cy="300" r="0" fill="none" stroke="#ffb86c" stroke-width="4" opacity="0"/>
-
-                <!-- Portal glow effect -->
-                <circle id="portalGlow" cx="400" cy="300" r="0" fill="url(#rusticMetal)" opacity="0"/>
             </svg>
         </div>
     </div>

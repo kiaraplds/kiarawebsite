@@ -35,15 +35,64 @@
                     </div>
                 </div>
 
-                <div class="section">
+                <div class="section technical-skills-section">
                     <h2 class="section-heading">Technical Skills</h2>
                     <div class="skills-list">
-                        <div class="skill-item" data-skill="python">Programming</div>
-                        <div class="skill-item" data-skill="sql">AI & MCP Development</div>
-                        <div class="skill-item" data-skill="data">Data Analytics</div>
-                        <div class="skill-item" data-skill="solutions">Solutions Engineering</div>
-                        <div class="skill-item" data-skill="learning">Fast Learner</div>
-                        <div class="skill-item" data-skill="tools">Data Engineering</div>
+                        <div class="skill-item" data-skill="solutions">
+                            Solutions Engineering
+                        </div>
+                        <div class="skill-item" data-skill="ai">
+                            AI & MCP Development
+                        </div>
+                        <div class="skill-item" data-skill="data">
+                            Data Analytics
+                        </div>
+                        <div class="skill-item" data-skill="engineering">
+                            Data Engineering
+                        </div>
+                        <div class="skill-item" data-skill="python">
+                            Programming
+                        </div>
+                        <div class="skill-item" data-skill="platforms">
+                            Platforms & Tools
+                        </div>
+                    </div>
+
+                    <!-- Skill Popups inside the section -->
+                    <div class="skill-popup" id="popup-solutions">
+                        <span class="popup-close">&times;</span>
+                        <h3>Solutions Engineering</h3>
+                        <p>Leading complex POCs across EMEA at ThoughtSpot, influencing six-figure ACV revenue through technical validation and executive-level evaluations. Key wins include Canal+ Global, Telegram, Rimowa, Tottenham Hotspurs, and Booking.com.</p>
+                    </div>
+
+                    <div class="skill-popup" id="popup-ai">
+                        <span class="popup-close">&times;</span>
+                        <h3>AI & MCP Development</h3>
+                        <p>Design and deploy LLM-powered agentic systems using Spotter and MCP servers, enabling safe tool-use on live enterprise data. Implemented retrieval and access-control guardrails (RLS/ABAC) to prevent unauthorised AI data access and model hallucinations.</p>
+                    </div>
+
+                    <div class="skill-popup" id="popup-data">
+                        <span class="popup-close">&times;</span>
+                        <h3>Data Analytics</h3>
+                        <p>Full ownership of Forecasting Models at YOOX NET-A-PORTER, allocating marketing spend across WW countries. December Week 1 allocation resulted in +24% YoY. Introduced Net Revenue KPI to reduce return rate by -5% YoY through strategic solutions.</p>
+                    </div>
+
+                    <div class="skill-popup" id="popup-engineering">
+                        <span class="popup-close">&times;</span>
+                        <h3>Data Engineering</h3>
+                        <p>Led cloud-native data automation architecture using AWS (Redshift, Lambda, S3) at Alexander McQueen. Database management, datatype optimisation, and complex SQL queries from pipeline to production. Experience with Snowflake, Databricks, and DBT.</p>
+                    </div>
+
+                    <div class="skill-popup" id="popup-python">
+                        <span class="popup-close">&times;</span>
+                        <h3>Programming</h3>
+                        <p>Python, SQL, JavaScript, APIs, and Automation. Built complex forecasting scripts, automated processes for stakeholders, and presented strategy decks to VPs and CEOs on data-driven insights.</p>
+                    </div>
+
+                    <div class="skill-popup" id="popup-platforms">
+                        <span class="popup-close">&times;</span>
+                        <h3>Platforms & Tools</h3>
+                        <p>ThoughtSpot, Tableau, PowerBI, AWS Cloud Services, Snowflake, Databricks, DBT, Claude, Claude Code, Cursor, MCP Servers, and Adobe Creative Cloud.</p>
                     </div>
                 </div>
 
@@ -72,10 +121,10 @@
                                 <p>Undergraduate studies in Computer Science</p>
                             </div>
                         </div>
-                        <div class="timeline-item">
+                        <div class="timeline-item current-location">
                             <div class="timeline-marker"></div>
                             <div class="timeline-content">
-                                <h3>London, UK</h3>
+                                <h3>London, UK <span class="location-badge">Current</span></h3>
                                 <p>Currently working @ThoughtSpot</p>
                             </div>
                         </div>
@@ -85,21 +134,25 @@
                 <div class="section">
                     <h2 class="section-heading">Languages</h2>
                     <div class="languages-grid">
-                        <div class="language-card">
+                        <div class="language-card" data-proficiency="Native">
                             <div class="lang-flag">🇬🇷</div>
                             <span>Greek</span>
+                            <div class="language-tooltip">Native</div>
                         </div>
-                        <div class="language-card">
+                        <div class="language-card" data-proficiency="Native">
                             <div class="lang-flag">🇫🇷</div>
                             <span>French</span>
+                            <div class="language-tooltip">Native</div>
                         </div>
-                        <div class="language-card">
+                        <div class="language-card" data-proficiency="Fluent">
                             <div class="lang-flag">🇬🇧</div>
                             <span>English</span>
+                            <div class="language-tooltip">Fluent</div>
                         </div>
-                        <div class="language-card">
+                        <div class="language-card" data-proficiency="Intermediate">
                             <div class="lang-flag">🇪🇸</div>
                             <span>Spanish</span>
+                            <div class="language-tooltip">Intermediate</div>
                         </div>
                     </div>
                 </div>
@@ -170,7 +223,7 @@
                     <h2 class="section-heading">Creative Expression</h2>
                     <div class="art-description">
                         <p>Art is where I find balance and freedom. Through painting, I explore colors, textures, and emotions that complement my analytical mind.</p>
-                        <p>My portfolio showcases pieces that blend traditional techniques with modern perspectives including painting on tablet or something mixixng digital with traditional mediums.</p>
+                        <p>My portfolio showcases pieces that blend traditional techniques with modern perspectives including painting on tablet or something mixing digital with traditional mediums.</p>
                         <p>In the past few months, I have been experimenting with Agentic experiences, creating web portals with agents and LLMs. I have been using ClaudeCode and Claude Sonnet on Cursor to create websites and apps, adding my creative touch and direction.</p>
                     </div>
                 </div>
@@ -208,6 +261,7 @@
 
     <!-- Contact footer -->
     <footer class="dual-footer">
+        <div class="footer-copyright">© 2025 Kiara Polychroniadi</div>
         <div class="footer-links">
             <a href="https://www.linkedin.com/in/kiara-polychroniadi" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a href="https://www.behance.net/kiarapldscb22" target="_blank" rel="noopener noreferrer">Behance</a>

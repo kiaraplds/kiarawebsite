@@ -44,11 +44,11 @@ artSide.addEventListener('scroll', updateBlendEffect);
 
 // Interactive divider drag functionality
 let isDragging = false;
-let startX = 0;
+let currentX = 0;
 
 divider.addEventListener('mousedown', (e) => {
     isDragging = true;
-    startX = e.clientX;
+    currentX = e.clientX;
     document.body.style.cursor = 'ew-resize';
     e.preventDefault();
 });
@@ -56,14 +56,17 @@ divider.addEventListener('mousedown', (e) => {
 document.addEventListener('mousemove', (e) => {
     if (!isDragging) return;
 
-    const deltaX = e.clientX - startX;
+    currentX = e.clientX;
     const containerWidth = window.innerWidth;
-    const newTechWidth = (50 + (deltaX / containerWidth) * 100);
+    const newTechWidth = (currentX / containerWidth) * 100;
 
     // Limit the width between 30% and 70%
     if (newTechWidth >= 30 && newTechWidth <= 70) {
         techSide.style.flex = `0 0 ${newTechWidth}%`;
         artSide.style.flex = `0 0 ${100 - newTechWidth}%`;
+
+        // Update divider position to follow
+        divider.style.left = `${newTechWidth}%`;
 
         // Update blend overlay intensity based on split ratio
         const splitDifference = Math.abs(50 - newTechWidth) / 20;
@@ -76,27 +79,49 @@ document.addEventListener('mouseup', () => {
         isDragging = false;
         document.body.style.cursor = 'default';
 
-        // Smooth transition back to 50/50 after a delay
-        setTimeout(() => {
-            techSide.style.transition = 'flex 0.5s ease';
-            artSide.style.transition = 'flex 0.5s ease';
-            techSide.style.flex = '1';
-            artSide.style.flex = '1';
-
-            setTimeout(() => {
-                techSide.style.transition = '';
-                artSide.style.transition = '';
-            }, 500);
-        }, 1000);
+        // Don't automatically reset - stay where the user dragged it
+        // User must manually drag back to center if they want 50/50
     }
 });
 
-// Skill item hover effects with code morph
+// Skill item click to open popup
 const skillItems = document.querySelectorAll('.skill-item');
+const popupBackdrop = document.getElementById('popupBackdrop');
+const skillPopups = document.querySelectorAll('.skill-popup');
+const popupCloseButtons = document.querySelectorAll('.popup-close');
 
+// Function to open popup next to clicked item
+function openSkillPopup(skillType, clickedElement) {
+    // Close any open popups first
+    closeAllPopups();
+
+    const popup = document.getElementById(`popup-${skillType}`);
+    if (popup) {
+        // Get the position of the clicked element
+        const rect = clickedElement.getBoundingClientRect();
+
+        // Position popup to the right of the clicked item
+        popup.style.top = `${rect.top}px`;
+        popup.style.left = `${rect.right + 20}px`;
+
+        popup.classList.add('active');
+    }
+}
+
+// Function to close all popups
+function closeAllPopups() {
+    skillPopups.forEach(popup => popup.classList.remove('active'));
+}
+
+// Add click event to skill items
 skillItems.forEach(item => {
+    item.addEventListener('click', () => {
+        const skillType = item.getAttribute('data-skill');
+        openSkillPopup(skillType, item);
+    });
+
+    // Keep hover ripple effect
     item.addEventListener('mouseenter', () => {
-        // Create ripple effect
         const ripple = document.createElement('div');
         ripple.style.position = 'absolute';
         ripple.style.width = '10px';
@@ -111,6 +136,18 @@ skillItems.forEach(item => {
 
         setTimeout(() => ripple.remove(), 600);
     });
+});
+
+// Close popup when clicking close button
+popupCloseButtons.forEach(button => {
+    button.addEventListener('click', closeAllPopups);
+});
+
+// Close popup with Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeAllPopups();
+    }
 });
 
 // Add ripple animation to document
@@ -326,6 +363,9 @@ function checkResponsive() {
         divider.style.display = 'none';
         techSide.style.flex = '';
         artSide.style.flex = '';
+        techSide.style.width = '';
+        artSide.style.width = '';
+        divider.style.left = '50%';
     } else {
         divider.style.display = 'flex';
     }

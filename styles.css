@@ -464,11 +464,20 @@ body::before {
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 1.2rem;
+    padding: 1.2rem 2rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     animation: fadeIn 1.8s ease-out;
     z-index: 10;
     background: linear-gradient(to top, rgba(8, 26, 8, 0.9) 0%, transparent 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copyright {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.02rem;
 }
 
 .social-links {
@@ -476,6 +485,7 @@ body::before {
     gap: 1.5rem;
     justify-content: center;
     flex-wrap: wrap;
+    flex: 1;
 }
 
 /* Social icon styles */
@@ -571,13 +581,13 @@ body::before {
 /* Right gear rotates counter-clockwise (to the left) */
 .transition-overlay.backward #rightGear {
     animation: rightGearMechanism 3s cubic-bezier(0.25, 0.1, 0.25, 1);
-    transform-origin: 550px 315px;
+    transform-origin: 480px 300px;
 }
 
 /* Left gear rotates counter-clockwise (to the left) */
 .transition-overlay.backward #leftGear {
     animation: leftGearMechanism 3s cubic-bezier(0.25, 0.1, 0.25, 1);
-    transform-origin: 240px 305px;
+    transform-origin: 320px 300px;
 }
 
 /* Portal circle expands from center as gears come together */
