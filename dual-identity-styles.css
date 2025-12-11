@@ -752,7 +752,107 @@ body {
     }
 }
 
-/* Inspiration grid */
+/* Globe Container */
+.globe-container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+#globeCanvas {
+    width: 100%;
+    max-width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: #0a0a0f;
+    box-shadow:
+        0 0 60px rgba(100, 150, 200, 0.4),
+        0 0 100px rgba(100, 150, 200, 0.2),
+        inset 0 0 20px rgba(0, 0, 0, 0.8);
+    cursor: grab;
+    transition: transform 0.3s ease;
+}
+
+#globeCanvas:active {
+    cursor: grabbing;
+}
+
+.globe-caption {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.95rem;
+    color: rgba(201, 169, 97, 0.9);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+}
+
+.caption-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.caption-icon {
+    font-size: 1.2rem;
+}
+
+.caption-separator {
+    opacity: 0.5;
+}
+
+.travel-inspiration {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: rgba(201, 169, 97, 0.85);
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+    font-style: italic;
+    padding: 0 1rem;
+}
+
+.visited-countries-list {
+    width: 100%;
+    text-align: center;
+}
+
+.countries-intro {
+    font-size: 0.85rem;
+    color: rgba(201, 169, 97, 0.7);
+    margin-bottom: 0.75rem;
+    font-style: italic;
+}
+
+.countries-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.country-tag {
+    padding: 0.4rem 0.8rem;
+    background: rgba(201, 169, 97, 0.12);
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: rgba(201, 169, 97, 0.95);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.country-tag:hover {
+    background: rgba(201, 169, 97, 0.2);
+    border-color: rgba(201, 169, 97, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Old inspiration grid (keeping for backwards compatibility) */
 .inspiration-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -919,12 +1019,11 @@ body {
 .dual-footer {
     position: relative;
     padding: 1.5rem 2rem;
-    background: rgba(10, 10, 10, 0.95);
-    backdrop-filter: blur(10px);
+    background: rgb(10, 10, 10);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 50;
+    z-index: 9999;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
@@ -932,13 +1031,15 @@ body {
     font-size: 0.7rem;
     color: rgba(255, 255, 255, 0.4);
     letter-spacing: 0.02rem;
+    position: absolute;
+    left: 2rem;
 }
 
 .footer-links {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 2rem;
-    flex: 1;
 }
 
 .footer-links a {

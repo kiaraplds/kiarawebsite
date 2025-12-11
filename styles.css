@@ -470,7 +470,7 @@ body::before {
     z-index: 10;
     background: linear-gradient(to top, rgba(8, 26, 8, 0.9) 0%, transparent 100%);
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
@@ -478,6 +478,8 @@ body::before {
     font-size: 0.7rem;
     color: rgba(255, 255, 255, 0.4);
     letter-spacing: 0.02rem;
+    position: absolute;
+    left: 2rem;
 }
 
 .social-links {
@@ -485,7 +487,6 @@ body::before {
     gap: 1.5rem;
     justify-content: center;
     flex-wrap: wrap;
-    flex: 1;
 }
 
 /* Social icon styles */

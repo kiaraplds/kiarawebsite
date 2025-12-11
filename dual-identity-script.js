@@ -169,6 +169,21 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// Close popup when clicking anywhere outside the popup
+document.addEventListener('click', (e) => {
+    // Check if click is outside any popup and not on a skill item
+    const isSkillItem = e.target.closest('.skill-item');
+    const isPopup = e.target.closest('.skill-popup');
+
+    if (!isSkillItem && !isPopup) {
+        closeAllPopups();
+    }
+});
+
+// Close popup when scrolling
+techSide.addEventListener('scroll', closeAllPopups);
+artSide.addEventListener('scroll', closeAllPopups);
+
 // Add ripple animation to document
 if (!document.querySelector('#ripple-styles')) {
     const style = document.createElement('style');
@@ -311,55 +326,6 @@ if (portfolioBtn) {
     });
 }
 
-// Cross-side interaction - clicking on tech elements affects art side
-skillItems.forEach(item => {
-    item.addEventListener('click', () => {
-        // Create a temporary visual bridge between sides
-        const bridge = document.createElement('div');
-        bridge.style.position = 'fixed';
-        bridge.style.top = '50%';
-        bridge.style.left = '0';
-        bridge.style.width = '100%';
-        bridge.style.height = '2px';
-        bridge.style.background = 'linear-gradient(to right, rgba(168, 201, 209, 0.6), rgba(201, 169, 97, 0.6))';
-        bridge.style.zIndex = '1000';
-        bridge.style.pointerEvents = 'none';
-        bridge.style.animation = 'bridgeExpand 0.8s ease-out forwards';
-
-        document.body.appendChild(bridge);
-
-        // Pulse the blend overlay
-        blendOverlay.style.opacity = '0.5';
-        setTimeout(() => {
-            blendOverlay.style.opacity = '0.1';
-        }, 300);
-
-        setTimeout(() => bridge.remove(), 800);
-    });
-});
-
-// Add bridge animation
-if (!document.querySelector('#bridge-styles')) {
-    const bridgeStyle = document.createElement('style');
-    bridgeStyle.id = 'bridge-styles';
-    bridgeStyle.textContent = `
-        @keyframes bridgeExpand {
-            0% {
-                transform: scaleX(0);
-                opacity: 0;
-            }
-            50% {
-                transform: scaleX(1);
-                opacity: 1;
-            }
-            100% {
-                transform: scaleX(0);
-                opacity: 0;
-            }
-        }
-    `;
-    document.head.appendChild(bridgeStyle);
-}
 
 // Balance statement reveal animation
 const balanceStatement = document.querySelector('.balance-statement');
@@ -455,3 +421,450 @@ document.addEventListener('keydown', function(e) {
         closeLightbox();
     }
 });
+
+// 3D Globe Visualization
+const canvas = document.getElementById('globeCanvas');
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+
+    // Set canvas size
+    const size = 220;
+    canvas.width = size;
+    canvas.height = size;
+
+    // Countries you've visited with real coordinates (lat, lon)
+    const visitedLocations = [
+        // Asia
+        { name: 'Japan', lat: 35.6762, lon: 139.6503, country: true },
+        { name: 'Singapore', lat: 1.3521, lon: 103.8198, country: true },
+        { name: 'Dubai', lat: 25.2048, lon: 55.2708, country: true },
+
+        // Americas
+        { name: 'New York', lat: 40.7128, lon: -74.0060, country: true },
+        { name: 'California', lat: 36.7783, lon: -119.4179, country: true },
+        { name: 'Mexico', lat: 19.4326, lon: -99.1332, country: true },
+        { name: 'Costa Rica', lat: 9.7489, lon: -83.7534, country: true },
+
+        // Africa
+        { name: 'Morocco', lat: 33.9716, lon: -6.8498, country: true },
+
+        // Europe
+        { name: 'Greece', lat: 37.9838, lon: 23.7275, country: true },
+        { name: 'United Kingdom', lat: 51.5074, lon: -0.1278, country: true },
+        { name: 'France', lat: 48.8566, lon: 2.3522, country: true },
+        { name: 'Spain', lat: 40.4168, lon: -3.7038, country: true },
+        { name: 'Italy', lat: 41.9028, lon: 12.4964, country: true },
+        { name: 'Netherlands', lat: 52.3676, lon: 4.9041, country: true },
+        { name: 'Germany', lat: 52.5200, lon: 13.4050, country: true },
+        { name: 'Switzerland', lat: 46.9480, lon: 7.4474, country: true },
+        { name: 'Portugal', lat: 38.7223, lon: -9.1393, country: true }
+    ];
+
+    // Populate country tags
+    const countriesTagsContainer = document.getElementById('countriesTags');
+    if (countriesTagsContainer) {
+        visitedLocations.forEach(location => {
+            const tag = document.createElement('span');
+            tag.className = 'country-tag';
+            tag.textContent = location.name;
+            countriesTagsContainer.appendChild(tag);
+        });
+    }
+
+    // Globe parameters
+    let rotationX = 0; // Horizontal rotation
+    let rotationY = 0; // Vertical rotation
+    let isDragging = false;
+    let lastX = 0;
+    let lastY = 0;
+    let dragVelocityX = 0;
+    let dragVelocityY = 0;
+
+    // Tooltip state
+    let hoveredLocation = null;
+    let mouseCanvasX = 0;
+    let mouseCanvasY = 0;
+
+    // Convert lat/lon to 3D coordinates
+    function latLonToXYZ(lat, lon, radius) {
+        const phi = (90 - lat) * (Math.PI / 180);
+        const theta = (lon + 180) * (Math.PI / 180);
+        return {
+            x: -radius * Math.sin(phi) * Math.cos(theta),
+            y: radius * Math.cos(phi),
+            z: radius * Math.sin(phi) * Math.sin(theta)
+        };
+    }
+
+    // Generate background stars
+    const stars = [];
+    for (let i = 0; i < 200; i++) {
+        stars.push({
+            x: Math.random() * size,
+            y: Math.random() * size,
+            radius: Math.random() * 1.5,
+            opacity: Math.random() * 0.5 + 0.3
+        });
+    }
+
+    // World geometry data - GeoJSON format
+    let worldGeometry = [];
+    let isLoadingMap = true;
+
+    // Fetch simplified world map GeoJSON
+    fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
+        .then(response => response.json())
+        .then(data => {
+            // Extract coordinates from GeoJSON
+            if (data.features) {
+                data.features.forEach(feature => {
+                    if (feature.geometry) {
+                        if (feature.geometry.type === 'Polygon') {
+                            feature.geometry.coordinates.forEach(ring => {
+                                worldGeometry.push(ring);
+                            });
+                        } else if (feature.geometry.type === 'MultiPolygon') {
+                            feature.geometry.coordinates.forEach(polygon => {
+                                polygon.forEach(ring => {
+                                    worldGeometry.push(ring);
+                                });
+                            });
+                        }
+                    }
+                });
+            }
+            isLoadingMap = false;
+            console.log('Map loaded with', worldGeometry.length, 'polygons');
+        })
+        .catch(error => {
+            console.error('Failed to load map data:', error);
+            isLoadingMap = false;
+        });
+
+    // Draw the globe
+    function drawGlobe() {
+        const centerX = size / 2;
+        const centerY = size / 2;
+        const radius = size * 0.4;
+
+        // Draw starry background
+        ctx.fillStyle = '#0a0a0f';
+        ctx.fillRect(0, 0, size, size);
+
+        // Draw stars
+        stars.forEach(star => {
+            ctx.beginPath();
+            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+            ctx.fill();
+        });
+
+        // Draw night Earth sphere
+        const earthGradient = ctx.createRadialGradient(
+            centerX - radius * 0.3, centerY - radius * 0.3, radius * 0.1,
+            centerX, centerY, radius
+        );
+        earthGradient.addColorStop(0, 'rgba(30, 40, 60, 1)');
+        earthGradient.addColorStop(0.7, 'rgba(15, 20, 35, 1)');
+        earthGradient.addColorStop(1, 'rgba(5, 10, 20, 1)');
+
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+        ctx.fillStyle = earthGradient;
+        ctx.fill();
+
+        // Draw world map if loaded
+        if (!isLoadingMap && worldGeometry && worldGeometry.length > 0) {
+            worldGeometry.forEach(path => {
+                if (!path || path.length < 2) return;
+
+                ctx.beginPath();
+                let firstPoint = true;
+
+                for (let i = 0; i < path.length; i++) {
+                    const [lon, lat] = path[i];
+                    const phi = (90 - lat) * (Math.PI / 180);
+                    const theta = (lon + 180) * (Math.PI / 180);
+
+                    // Apply 3D rotation
+                    let x = -radius * Math.sin(phi) * Math.cos(theta - rotationX);
+                    let y = -radius * Math.cos(phi);  // Negated to flip globe right-side up
+                    let z = radius * Math.sin(phi) * Math.sin(theta - rotationX);
+
+                    // Apply vertical rotation (Y-axis)
+                    const tempY = y * Math.cos(rotationY) - z * Math.sin(rotationY);
+                    z = y * Math.sin(rotationY) + z * Math.cos(rotationY);
+                    y = tempY;
+
+                    // Only draw visible parts
+                    if (z > -radius * 0.1) {
+                        const screenX = centerX + x;
+                        const screenY = centerY + y;
+
+                        if (firstPoint) {
+                            ctx.moveTo(screenX, screenY);
+                            firstPoint = false;
+                        } else {
+                            ctx.lineTo(screenX, screenY);
+                        }
+                    } else {
+                        firstPoint = true;
+                    }
+                }
+
+                ctx.closePath();
+                ctx.fillStyle = 'rgba(100, 150, 110, 0.85)';
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(80, 120, 90, 0.4)';
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+            });
+        } else if (isLoadingMap) {
+            // Show loading text
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.font = '14px DM Sans';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Loading map...', centerX, centerY);
+        }
+
+        // Draw visited locations with glowing pins (360° visible)
+        let tempHoveredLocation = null;
+        visitedLocations.forEach(location => {
+            const phi = (90 - location.lat) * (Math.PI / 180);
+            const theta = (location.lon + 180) * (Math.PI / 180);
+
+            // Apply 3D rotation
+            let x = -radius * Math.sin(phi) * Math.cos(theta - rotationX);
+            let y = -radius * Math.cos(phi);  // Negated to flip globe right-side up
+            let z = radius * Math.sin(phi) * Math.sin(theta - rotationX);
+
+            // Apply vertical rotation (Y-axis)
+            const tempY = y * Math.cos(rotationY) - z * Math.sin(rotationY);
+            z = y * Math.sin(rotationY) + z * Math.cos(rotationY);
+            y = tempY;
+
+            // Draw points on visible side (allowing some wrap for 360° view)
+            if (z > -radius * 0.1) {
+                const screenX = centerX + x;
+                const screenY = centerY + y;
+                const depth = Math.max(0, (z + radius * 0.1) / (radius * 1.1));
+                const size = 4 + depth * 3;
+
+                // Check if mouse is hovering over this location
+                if (!isDragging) {
+                    const dx = mouseCanvasX - screenX;
+                    const dy = mouseCanvasY - screenY;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < size + 5) {
+                        tempHoveredLocation = location;
+                        location.screenX = screenX;
+                        location.screenY = screenY;
+                        location.size = size;
+                    }
+                }
+
+                // Glow effect
+                ctx.shadowBlur = 20;
+                ctx.shadowColor = `rgba(255, 200, 100, ${0.6 + depth * 0.4})`;
+
+                // Draw pin
+                ctx.beginPath();
+                ctx.arc(screenX, screenY, size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 200, 100, ${0.7 + depth * 0.3})`;
+                ctx.fill();
+
+                // Inner bright core
+                ctx.beginPath();
+                ctx.arc(screenX, screenY, size * 0.5, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 240, 180, ${0.8 + depth * 0.2})`;
+                ctx.fill();
+
+                ctx.shadowBlur = 0;
+
+                location.visible = true;
+            } else {
+                location.visible = false;
+            }
+        });
+
+        hoveredLocation = tempHoveredLocation;
+
+        // Draw tooltip if hovering
+        if (hoveredLocation && hoveredLocation.visible) {
+            const paddingH = 12;
+            const paddingV = 8;
+            const fontSize = 13;
+            const borderRadius = 6;
+
+            ctx.font = `600 ${fontSize}px 'DM Sans', sans-serif`;
+            const textWidth = ctx.measureText(hoveredLocation.name).width;
+
+            const tooltipX = hoveredLocation.screenX - textWidth / 2 - paddingH;
+            const tooltipY = hoveredLocation.screenY - hoveredLocation.size - 32;
+            const tooltipWidth = textWidth + paddingH * 2;
+            const tooltipHeight = fontSize + paddingV * 2;
+
+            // Draw shadow/glow
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = 'rgba(255, 200, 100, 0.4)';
+
+            // Tooltip background with rounded corners
+            ctx.fillStyle = 'rgba(10, 10, 15, 0.95)';
+            ctx.beginPath();
+            ctx.roundRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight, borderRadius);
+            ctx.fill();
+
+            // Gradient border
+            const borderGradient = ctx.createLinearGradient(
+                tooltipX, tooltipY,
+                tooltipX + tooltipWidth, tooltipY + tooltipHeight
+            );
+            borderGradient.addColorStop(0, 'rgba(255, 220, 150, 0.8)');
+            borderGradient.addColorStop(0.5, 'rgba(255, 200, 100, 1)');
+            borderGradient.addColorStop(1, 'rgba(255, 180, 80, 0.8)');
+
+            ctx.strokeStyle = borderGradient;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.roundRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight, borderRadius);
+            ctx.stroke();
+
+            ctx.shadowBlur = 0;
+
+            // Draw small triangle pointer
+            const arrowSize = 5;
+            const arrowX = hoveredLocation.screenX;
+            const arrowY = tooltipY + tooltipHeight;
+
+            ctx.fillStyle = 'rgba(10, 10, 15, 0.95)';
+            ctx.beginPath();
+            ctx.moveTo(arrowX, arrowY + arrowSize);
+            ctx.lineTo(arrowX - arrowSize, arrowY);
+            ctx.lineTo(arrowX + arrowSize, arrowY);
+            ctx.closePath();
+            ctx.fill();
+
+            // Tooltip text with gradient
+            const textGradient = ctx.createLinearGradient(
+                tooltipX, tooltipY,
+                tooltipX + tooltipWidth, tooltipY + tooltipHeight
+            );
+            textGradient.addColorStop(0, 'rgba(255, 230, 150, 1)');
+            textGradient.addColorStop(1, 'rgba(255, 200, 100, 1)');
+
+            ctx.fillStyle = textGradient;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(
+                hoveredLocation.name,
+                hoveredLocation.screenX,
+                tooltipY + tooltipHeight / 2
+            );
+        }
+
+        // Draw atmosphere glow
+        const atmosphereGradient = ctx.createRadialGradient(
+            centerX, centerY, radius * 0.95,
+            centerX, centerY, radius * 1.15
+        );
+        atmosphereGradient.addColorStop(0, 'rgba(100, 150, 200, 0.3)');
+        atmosphereGradient.addColorStop(0.5, 'rgba(100, 150, 200, 0.15)');
+        atmosphereGradient.addColorStop(1, 'rgba(100, 150, 200, 0)');
+
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius * 1.15, 0, Math.PI * 2);
+        ctx.fillStyle = atmosphereGradient;
+        ctx.fill();
+
+        // Draw Earth outline
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(100, 150, 200, 0.4)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+    }
+
+    // Animation loop
+    function animate() {
+        // Apply velocity and auto-rotation (horizontal only)
+        rotationX += 0.003 + dragVelocityX;
+
+        // Apply friction
+        dragVelocityX *= 0.95;
+
+        drawGlobe();
+        requestAnimationFrame(animate);
+    }
+
+    // Mouse interaction with full 360° support
+    canvas.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        lastX = e.clientX;
+        lastY = e.clientY;
+        dragVelocityX = 0;
+        dragVelocityY = 0;
+    });
+
+    // Track mouse position on canvas
+    canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mouseCanvasX = e.clientX - rect.left;
+        mouseCanvasY = e.clientY - rect.top;
+
+        if (isDragging) {
+            const deltaX = e.clientX - lastX;
+            dragVelocityX = -deltaX * 0.005;  // Negated for reversed drag
+            rotationX += dragVelocityX;
+            lastX = e.clientX;
+            canvas.style.cursor = 'grabbing';
+        } else {
+            // Cursor will be set by drawGlobe based on hover state
+            if (hoveredLocation) {
+                canvas.style.cursor = 'pointer';
+            } else {
+                canvas.style.cursor = 'grab';
+            }
+        }
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            const deltaX = e.clientX - lastX;
+            dragVelocityX = -deltaX * 0.005;  // Negated for reversed drag
+            rotationX += dragVelocityX;
+            lastX = e.clientX;
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+    });
+
+    // Touch support for mobile
+    canvas.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        lastX = e.touches[0].clientX;
+        lastY = e.touches[0].clientY;
+        dragVelocityX = 0;
+        dragVelocityY = 0;
+        e.preventDefault();
+    });
+
+    canvas.addEventListener('touchmove', (e) => {
+        if (isDragging) {
+            const deltaX = e.touches[0].clientX - lastX;
+            dragVelocityX = -deltaX * 0.005;  // Negated for reversed drag
+            rotationX += dragVelocityX;
+            lastX = e.touches[0].clientX;
+        }
+        e.preventDefault();
+    });
+
+    canvas.addEventListener('touchend', () => {
+        isDragging = false;
+    });
+
+    // Start animation
+    animate();
+}
