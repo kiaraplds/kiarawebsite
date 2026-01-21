@@ -4,6 +4,7 @@
   "description": "Kiara Polychroniadi's Portfolio Website",
   "main": "index.html",
   "scripts": {
+    "start": "npx serve -l 3000",
     "dev": "vercel dev",
     "build": "echo 'Static site - no build needed'",
     "deploy": "vercel --prod"

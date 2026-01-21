@@ -1,117 +1,50 @@
-// Global drag state variable
-let isDraggingDivider = false;
+// ===================================
+// SCROLL INDICATOR & DIVIDER VISIBILITY
+// ===================================
+const scrollIndicator = document.getElementById('scrollIndicator');
+const dualSection = document.getElementById('dualSection');
+const divider = document.getElementById('divider');
 
-// Get elements
-const enterBtn = document.getElementById('enterBtn');
-const transitionOverlay = document.getElementById('transitionOverlay');
-const previewContainer = document.querySelector('.preview-container');
-
-// Function to navigate to portfolio
-function navigateToPortfolio() {
-    transitionOverlay.classList.add('forward');
-    setTimeout(() => {
-        window.location.href = 'after-ai.html';
-    }, 1600);
-}
-
-// Enter button click handler
-enterBtn.addEventListener('click', navigateToPortfolio);
-
-// Preview container click handler
-if (previewContainer) {
-    previewContainer.addEventListener('click', navigateToPortfolio);
-}
-
-// Add hover sound effect (optional enhancement)
-const widgets = document.querySelectorAll('.widget');
-widgets.forEach(widget => {
-    widget.addEventListener('mouseenter', () => {
-        widget.style.transition = 'all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+// Scroll to dual section when clicking the scroll indicator
+if (scrollIndicator && dualSection) {
+    scrollIndicator.addEventListener('click', () => {
+        dualSection.scrollIntoView({ behavior: 'smooth' });
     });
-});
-
-// Chat functionality
-const chatToggle = document.getElementById('chatToggle');
-const chatContainer = document.getElementById('chatContainer');
-const chatClose = document.getElementById('chatClose');
-const chatInput = document.getElementById('chatInput');
-const chatSend = document.getElementById('chatSend');
-const chatMessages = document.getElementById('chatMessages');
-
-// Toggle chat
-chatToggle.addEventListener('click', () => {
-    chatContainer.classList.toggle('active');
-    if (chatContainer.classList.contains('active')) {
-        chatInput.focus();
-        // Hide notification badge when chat is opened
-        const notification = document.querySelector('.chat-notification');
-        if (notification) {
-            notification.style.display = 'none';
-        }
-    }
-});
-
-// Close chat
-chatClose.addEventListener('click', () => {
-    chatContainer.classList.remove('active');
-});
-
-// Send message function
-function sendMessage() {
-    const message = chatInput.value.trim();
-    if (message === '') return;
-
-    // Add user message
-    const userMessage = document.createElement('div');
-    userMessage.className = 'chat-message user-message';
-    userMessage.innerHTML = `<p>${message}</p>`;
-    chatMessages.appendChild(userMessage);
-
-    // Clear input
-    chatInput.value = '';
-
-    // Scroll to bottom
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-
-    // Fun bot responses
-    const responses = [
-        "I appreciate the effort, but I'm literally just CSS and JavaScript 😅",
-        "Bold of you to assume I can read! Try <a href='mailto:kiaraplds@hotmail.com'>email</a> instead ✉️",
-        "I'm flattered, but I'm not that kind of chatbot. Real talk? <a href='https://www.linkedin.com/in/kiara-polychroniadi' target='_blank'>LinkedIn</a> me!",
-        "Still here? Okay fine, send it to <a href='mailto:kiaraplds@hotmail.com'>kiaraplds@hotmail.com</a> 📧",
-        "Look, I'm beautiful AND useless. <a href='https://www.linkedin.com/in/kiara-polychroniadi' target='_blank'>LinkedIn</a> is where the magic happens ✨"
-    ];
-
-    setTimeout(() => {
-        const botMessage = document.createElement('div');
-        botMessage.className = 'chat-message bot-message';
-        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-        botMessage.innerHTML = `<p>${randomResponse}</p>`;
-        chatMessages.appendChild(botMessage);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }, 800);
 }
 
-// Send on button click
-chatSend.addEventListener('click', sendMessage);
-
-// Send on Enter key
-chatInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        sendMessage();
+// Show/hide divider based on scroll position
+function updateDividerVisibility() {
+    if (!divider || !dualSection) return;
+    
+    const dualSectionTop = dualSection.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+    
+    // Show divider when dual section is mostly in view
+    if (dualSectionTop < windowHeight * 0.5) {
+        divider.classList.add('visible');
+    } else {
+        divider.classList.remove('visible');
     }
-});
-// Get elements
+}
+
+window.addEventListener('scroll', updateDividerVisibility);
+updateDividerVisibility();
+
+// ===================================
+// DUAL IDENTITY SECTION FUNCTIONALITY
+// ===================================
 const techSide = document.getElementById('techSide');
 const artSide = document.getElementById('artSide');
-const divider = document.getElementById('divider');
 const blendOverlay = document.getElementById('blendOverlay');
+
+// Global drag state variable
+let isDraggingDivider = false;
 
 // Scroll synchronization between sides
 let isSyncing = false;
 
 function syncScroll(source, target) {
-    if (isSyncing) return;
+    if (isSyncing || !source || !target) return;
     isSyncing = true;
 
     const sourceScrollPercentage = source.scrollTop / (source.scrollHeight - source.clientHeight);
@@ -123,11 +56,15 @@ function syncScroll(source, target) {
 }
 
 // Add scroll event listeners for synchronized scrolling
-techSide.addEventListener('scroll', () => syncScroll(techSide, artSide));
-artSide.addEventListener('scroll', () => syncScroll(artSide, techSide));
+if (techSide && artSide) {
+    techSide.addEventListener('scroll', () => syncScroll(techSide, artSide));
+    artSide.addEventListener('scroll', () => syncScroll(artSide, techSide));
+}
 
 // Scroll-based blend effect
 function updateBlendEffect() {
+    if (!techSide || !artSide || !blendOverlay) return;
+    
     const techScrollPercentage = techSide.scrollTop / (techSide.scrollHeight - techSide.clientHeight);
     const artScrollPercentage = artSide.scrollTop / (artSide.scrollHeight - artSide.clientHeight);
 
@@ -142,21 +79,25 @@ function updateBlendEffect() {
     }
 }
 
-techSide.addEventListener('scroll', updateBlendEffect);
-artSide.addEventListener('scroll', updateBlendEffect);
+if (techSide && artSide) {
+    techSide.addEventListener('scroll', updateBlendEffect);
+    artSide.addEventListener('scroll', updateBlendEffect);
+}
 
 // Interactive divider drag functionality
 let currentX = 0;
 
-divider.addEventListener('mousedown', (e) => {
-    isDraggingDivider = true;
-    currentX = e.clientX;
-    document.body.style.cursor = 'ew-resize';
-    e.preventDefault();
-});
+if (divider) {
+    divider.addEventListener('mousedown', (e) => {
+        isDraggingDivider = true;
+        currentX = e.clientX;
+        document.body.style.cursor = 'ew-resize';
+        e.preventDefault();
+    });
+}
 
 document.addEventListener('mousemove', (e) => {
-    if (!isDraggingDivider) return;
+    if (!isDraggingDivider || !techSide || !artSide || !divider) return;
 
     currentX = e.clientX;
     const containerWidth = window.innerWidth;
@@ -171,8 +112,10 @@ document.addEventListener('mousemove', (e) => {
         divider.style.left = `${newTechWidth}%`;
 
         // Update blend overlay intensity based on split ratio
-        const splitDifference = Math.abs(50 - newTechWidth) / 20;
-        blendOverlay.style.opacity = Math.min(splitDifference * 0.2, 0.4);
+        if (blendOverlay) {
+            const splitDifference = Math.abs(50 - newTechWidth) / 20;
+            blendOverlay.style.opacity = Math.min(splitDifference * 0.2, 0.4);
+        }
     }
 });
 
@@ -180,69 +123,54 @@ document.addEventListener('mouseup', (e) => {
     if (isDraggingDivider) {
         isDraggingDivider = false;
         document.body.style.cursor = 'default';
-
-        // Don't automatically reset - stay where the user dragged it
-        // User must manually drag back to center if they want 50/50
         e.stopPropagation();
     }
 });
 
-// Skill item click to open popup
+// ===================================
+// SKILL POPUPS
+// ===================================
 const skillItems = document.querySelectorAll('.skill-item');
-const popupBackdrop = document.getElementById('popupBackdrop');
 const skillPopups = document.querySelectorAll('.skill-popup');
 const popupCloseButtons = document.querySelectorAll('.popup-close');
 
 // Function to open popup next to clicked item
 function openSkillPopup(skillType, clickedElement) {
-    // Close any open popups first
     closeAllPopups();
 
     const popup = document.getElementById(`popup-${skillType}`);
     if (popup) {
-        // Get the position of the clicked element
         const rect = clickedElement.getBoundingClientRect();
-
-        // Calculate position with some padding
         const leftPosition = rect.right + 20;
-
-        // Check if popup would go off screen to the right
-        const popupWidth = 400; // max-width from CSS
+        const popupWidth = 400;
         const viewportWidth = window.innerWidth;
 
         let finalLeft = leftPosition;
 
-        // If it goes off screen, position to the left of the button instead
         if (leftPosition + popupWidth > viewportWidth) {
             finalLeft = rect.left - popupWidth - 20;
         }
 
-        // If still off screen (very narrow viewport), center it
         if (finalLeft < 0) {
             finalLeft = Math.max(10, (viewportWidth - popupWidth) / 2);
         }
 
-        // Position popup
         popup.style.top = `${rect.top}px`;
         popup.style.left = `${finalLeft}px`;
-
         popup.classList.add('active');
     }
 }
 
-// Function to close all popups
 function closeAllPopups() {
     skillPopups.forEach(popup => popup.classList.remove('active'));
 }
 
-// Add click event to skill items
 skillItems.forEach(item => {
     item.addEventListener('click', () => {
         const skillType = item.getAttribute('data-skill');
         openSkillPopup(skillType, item);
     });
 
-    // Keep hover ripple effect
     item.addEventListener('mouseenter', () => {
         const ripple = document.createElement('div');
         ripple.style.position = 'absolute';
@@ -260,21 +188,18 @@ skillItems.forEach(item => {
     });
 });
 
-// Close popup when clicking close button
 popupCloseButtons.forEach(button => {
     button.addEventListener('click', closeAllPopups);
 });
 
-// Close popup with Escape key
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         closeAllPopups();
+        closeLightbox();
     }
 });
 
-// Close popup when clicking anywhere outside the popup
 document.addEventListener('click', (e) => {
-    // Check if click is outside any popup and not on a skill item
     const isSkillItem = e.target.closest('.skill-item');
     const isPopup = e.target.closest('.skill-popup');
 
@@ -283,9 +208,8 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Close popup when scrolling
-techSide.addEventListener('scroll', closeAllPopups);
-artSide.addEventListener('scroll', closeAllPopups);
+if (techSide) techSide.addEventListener('scroll', closeAllPopups);
+if (artSide) artSide.addEventListener('scroll', closeAllPopups);
 
 // Add ripple animation to document
 if (!document.querySelector('#ripple-styles')) {
@@ -306,209 +230,28 @@ if (!document.querySelector('#ripple-styles')) {
     document.head.appendChild(style);
 }
 
-// Parallax effect on scroll
-function parallaxEffect() {
-    const scrollY = techSide.scrollTop;
-    const sections = document.querySelectorAll('.section');
-
-    sections.forEach((section, index) => {
-        const speed = 0.5 + (index * 0.1);
-        const yPos = -(scrollY * speed * 0.1);
-        section.style.transform = `translateY(${yPos}px)`;
-    });
-}
-
-techSide.addEventListener('scroll', parallaxEffect);
-artSide.addEventListener('scroll', parallaxEffect);
-
-// Code block typing effect on first view
-const codeBlock = document.querySelector('.code-block');
-if (codeBlock) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                codeBlock.style.animation = 'fadeIn 0.8s ease-out';
-                observer.unobserve(codeBlock);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    observer.observe(codeBlock);
-}
-
-// Timeline animation on scroll
-const timelineItems = document.querySelectorAll('.timeline-item');
-if (timelineItems.length > 0) {
-    const timelineObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.animation = 'fadeInLeft 0.6s ease-out forwards';
-            }
-        });
-    }, { threshold: 0.3 });
-
-    timelineItems.forEach(item => {
-        item.style.opacity = '0';
-        timelineObserver.observe(item);
-    });
-}
-
-// Paint splatter animation
-const paintSplatter = document.querySelector('.paint-splatter');
-if (paintSplatter) {
-    let splatterInterval = setInterval(() => {
-        const randomX = Math.random() * 80 + 10;
-        const randomY = Math.random() * 80 + 10;
-        paintSplatter.style.left = randomX + '%';
-        paintSplatter.style.top = randomY + '%';
-    }, 3000);
-}
-
-// Inspiration cards stagger animation
-const inspirationCards = document.querySelectorAll('.inspiration-card');
-if (inspirationCards.length > 0) {
-    const inspirationObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
-                }, index * 100);
-                inspirationObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.3 });
-
-    inspirationCards.forEach(card => {
-        card.style.opacity = '0';
-        inspirationObserver.observe(card);
-    });
-}
-
-// Divider handle pulse on page load
-setTimeout(() => {
-    const dividerHandle = document.querySelector('.divider-handle');
-    if (dividerHandle) {
-        dividerHandle.style.animation = 'pulseGlow 3s ease-in-out infinite';
-    }
-}, 1000);
-
-// Mouse move parallax for background elements
-document.addEventListener('mousemove', (e) => {
-    const mouseX = e.clientX / window.innerWidth;
-    const mouseY = e.clientY / window.innerHeight;
-
-    const techBg = techSide.querySelector('::before');
-    const artBg = artSide.querySelector('::before');
-
-    // Subtle parallax movement
-    const moveX = (mouseX - 0.5) * 20;
-    const moveY = (mouseY - 0.5) * 20;
-
-    document.documentElement.style.setProperty('--mouse-x', `${moveX}px`);
-    document.documentElement.style.setProperty('--mouse-y', `${moveY}px`);
-});
-
-// Smooth scroll behavior for language cards
-const languageCards = document.querySelectorAll('.language-card');
-languageCards.forEach((card, index) => {
-    card.style.animationDelay = `${index * 0.1}s`;
-});
-
-// Add interactive hover effect to portfolio button
-const portfolioBtn = document.querySelector('.view-portfolio-btn');
-if (portfolioBtn) {
-    portfolioBtn.addEventListener('mouseenter', () => {
-        const canvas = document.querySelector('.canvas-placeholder');
-        canvas.style.transform = 'scale(1.02)';
-        canvas.style.transition = 'transform 0.3s ease';
-    });
-
-    portfolioBtn.addEventListener('mouseleave', () => {
-        const canvas = document.querySelector('.canvas-placeholder');
-        canvas.style.transform = 'scale(1)';
-    });
-}
-
-
-// Balance statement reveal animation
-const balanceStatement = document.querySelector('.balance-statement');
-if (balanceStatement) {
-    const balanceObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.animation = 'fadeIn 1s ease-out, pulseGlow 2s ease-in-out infinite';
-                balanceObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    balanceObserver.observe(balanceStatement);
-}
-
-// Responsive check - disable divider drag on mobile
-function checkResponsive() {
-    if (window.innerWidth <= 1024) {
-        divider.style.display = 'none';
-        techSide.style.flex = '';
-        artSide.style.flex = '';
-        techSide.style.width = '';
-        artSide.style.width = '';
-        divider.style.left = '50%';
-    } else {
-        divider.style.display = 'flex';
-    }
-}
-
-window.addEventListener('resize', checkResponsive);
-checkResponsive();
-
-// Initial load animations
-window.addEventListener('load', () => {
-    document.body.style.opacity = '1';
-
-    // Stagger section animations
-    const sections = document.querySelectorAll('.section');
-    sections.forEach((section, index) => {
-        section.style.animationDelay = `${0.2 + index * 0.2}s`;
-    });
-});
-
-// Smooth scroll to top on back to portal click
-const backPortal = document.querySelector('.back-portal');
-if (backPortal) {
-    backPortal.addEventListener('click', (e) => {
-        // Smooth fade out before navigation
-        document.body.style.transition = 'opacity 0.3s ease';
-        document.body.style.opacity = '0';
-    });
-}
-
-// Console easter egg
-console.log('%c👨‍💻 + 🎨 = ✨', 'font-size: 24px; font-weight: bold; background: linear-gradient(to right, #a8c9d1, #c9a961); -webkit-background-clip: text; color: transparent;');
-console.log('%cWelcome to the intersection of code and creativity!', 'font-size: 14px; color: #a8c9d1;');
-console.log('%cData by day, canvas by night.', 'font-size: 14px; color: #c9a961; font-style: italic;');
-
-// Image Lightbox functionality
+// ===================================
+// IMAGE LIGHTBOX
+// ===================================
 function openLightbox(imageSrc) {
     const modal = document.getElementById('lightboxModal');
     const modalImg = document.getElementById('lightboxImage');
     
-    modal.classList.add('active');
-    modalImg.src = imageSrc;
-    
-    // Prevent body scroll when lightbox is open
-    document.body.style.overflow = 'hidden';
+    if (modal && modalImg) {
+        modal.classList.add('active');
+        modalImg.src = imageSrc;
+        document.body.style.overflow = 'hidden';
+    }
 }
 
 function closeLightbox() {
     const modal = document.getElementById('lightboxModal');
-    modal.classList.remove('active');
-    
-    // Re-enable body scroll
-    document.body.style.overflow = 'auto';
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
 }
 
-// Close lightbox when clicking outside the image
 const lightboxModal = document.getElementById('lightboxModal');
 if (lightboxModal) {
     lightboxModal.addEventListener('click', function(e) {
@@ -518,40 +261,90 @@ if (lightboxModal) {
     });
 }
 
-// Close lightbox with Escape key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closeLightbox();
-    }
-});
+// ===================================
+// CHAT FUNCTIONALITY
+// ===================================
+const chatToggle = document.getElementById('chatToggle');
+const chatContainer = document.getElementById('chatContainer');
+const chatClose = document.getElementById('chatClose');
+const chatInput = document.getElementById('chatInput');
+const chatSend = document.getElementById('chatSend');
+const chatMessages = document.getElementById('chatMessages');
 
-// 3D Globe Visualization
+if (chatToggle && chatContainer && chatClose && chatInput && chatSend && chatMessages) {
+    chatToggle.addEventListener('click', () => {
+        chatContainer.classList.toggle('active');
+        if (chatContainer.classList.contains('active')) {
+            chatInput.focus();
+            const notification = document.querySelector('.chat-notification');
+            if (notification) {
+                notification.style.display = 'none';
+            }
+        }
+    });
+
+    chatClose.addEventListener('click', () => {
+        chatContainer.classList.remove('active');
+    });
+
+    function sendMessage() {
+        const message = chatInput.value.trim();
+        if (message === '') return;
+
+        const userMessage = document.createElement('div');
+        userMessage.className = 'chat-message user-message';
+        userMessage.innerHTML = `<p>${message}</p>`;
+        chatMessages.appendChild(userMessage);
+
+        chatInput.value = '';
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        const responses = [
+            "I appreciate the effort, but I'm literally just CSS and JavaScript 😅",
+            "Bold of you to assume I can read! Try <a href='mailto:kiaraplds@hotmail.com'>email</a> instead ✉️",
+            "I'm flattered, but I'm not that kind of chatbot. Real talk? <a href='https://www.linkedin.com/in/kiara-polychroniadi' target='_blank'>LinkedIn</a> me!",
+            "Still here? Okay fine, send it to <a href='mailto:kiaraplds@hotmail.com'>kiaraplds@hotmail.com</a> 📧",
+            "Look, I'm beautiful AND useless. <a href='https://www.linkedin.com/in/kiara-polychroniadi' target='_blank'>LinkedIn</a> is where the magic happens ✨"
+        ];
+
+        setTimeout(() => {
+            const botMessage = document.createElement('div');
+            botMessage.className = 'chat-message bot-message';
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            botMessage.innerHTML = `<p>${randomResponse}</p>`;
+            chatMessages.appendChild(botMessage);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 800);
+    }
+
+    chatSend.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+}
+
+// ===================================
+// 3D GLOBE VISUALIZATION
+// ===================================
 const canvas = document.getElementById('globeCanvas');
 if (canvas) {
     const ctx = canvas.getContext('2d');
 
-    // Set canvas size
     const size = 220;
     canvas.width = size;
     canvas.height = size;
 
-    // Countries you've visited with real coordinates (lat, lon)
     const visitedLocations = [
-        // Asia
         { name: 'Japan', lat: 35.6762, lon: 139.6503, country: true },
         { name: 'Singapore', lat: 1.3521, lon: 103.8198, country: true },
         { name: 'Dubai', lat: 25.2048, lon: 55.2708, country: true },
-
-        // Americas
         { name: 'New York', lat: 40.7128, lon: -74.0060, country: true },
         { name: 'California', lat: 36.7783, lon: -119.4179, country: true },
         { name: 'Mexico', lat: 19.4326, lon: -99.1332, country: true },
         { name: 'Costa Rica', lat: 9.7489, lon: -83.7534, country: true },
-
-        // Africa
         { name: 'Morocco', lat: 33.9716, lon: -6.8498, country: true },
-
-        // Europe
         { name: 'Greece', lat: 37.9838, lon: 23.7275, country: true },
         { name: 'United Kingdom', lat: 51.5074, lon: -0.1278, country: true },
         { name: 'France', lat: 48.8566, lon: 2.3522, country: true },
@@ -563,43 +356,17 @@ if (canvas) {
         { name: 'Portugal', lat: 38.7223, lon: -9.1393, country: true }
     ];
 
-    // Populate country tags
-    const countriesTagsContainer = document.getElementById('countriesTags');
-    if (countriesTagsContainer) {
-        visitedLocations.forEach(location => {
-            const tag = document.createElement('span');
-            tag.className = 'country-tag';
-            tag.textContent = location.name;
-            countriesTagsContainer.appendChild(tag);
-        });
-    }
-
-    // Globe parameters
-    let rotationX = 0; // Horizontal rotation
-    let rotationY = 0; // Vertical rotation
+    let rotationX = 0;
+    let rotationY = 0;
     let isDragging = false;
     let lastX = 0;
     let lastY = 0;
     let dragVelocityX = 0;
     let dragVelocityY = 0;
-
-    // Tooltip state
     let hoveredLocation = null;
     let mouseCanvasX = 0;
     let mouseCanvasY = 0;
 
-    // Convert lat/lon to 3D coordinates
-    function latLonToXYZ(lat, lon, radius) {
-        const phi = (90 - lat) * (Math.PI / 180);
-        const theta = (lon + 180) * (Math.PI / 180);
-        return {
-            x: -radius * Math.sin(phi) * Math.cos(theta),
-            y: radius * Math.cos(phi),
-            z: radius * Math.sin(phi) * Math.sin(theta)
-        };
-    }
-
-    // Generate background stars
     const stars = [];
     for (let i = 0; i < 200; i++) {
         stars.push({
@@ -610,15 +377,12 @@ if (canvas) {
         });
     }
 
-    // World geometry data - GeoJSON format
     let worldGeometry = [];
     let isLoadingMap = true;
 
-    // Fetch simplified world map GeoJSON
     fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
         .then(response => response.json())
         .then(data => {
-            // Extract coordinates from GeoJSON
             if (data.features) {
                 data.features.forEach(feature => {
                     if (feature.geometry) {
@@ -637,24 +401,20 @@ if (canvas) {
                 });
             }
             isLoadingMap = false;
-            console.log('Map loaded with', worldGeometry.length, 'polygons');
         })
         .catch(error => {
             console.error('Failed to load map data:', error);
             isLoadingMap = false;
         });
 
-    // Draw the globe
     function drawGlobe() {
         const centerX = size / 2;
         const centerY = size / 2;
         const radius = size * 0.4;
 
-        // Draw starry background
         ctx.fillStyle = '#0a0a0f';
         ctx.fillRect(0, 0, size, size);
 
-        // Draw stars
         stars.forEach(star => {
             ctx.beginPath();
             ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
@@ -662,7 +422,6 @@ if (canvas) {
             ctx.fill();
         });
 
-        // Draw night Earth sphere
         const earthGradient = ctx.createRadialGradient(
             centerX - radius * 0.3, centerY - radius * 0.3, radius * 0.1,
             centerX, centerY, radius
@@ -676,7 +435,6 @@ if (canvas) {
         ctx.fillStyle = earthGradient;
         ctx.fill();
 
-        // Draw world map if loaded
         if (!isLoadingMap && worldGeometry && worldGeometry.length > 0) {
             worldGeometry.forEach(path => {
                 if (!path || path.length < 2) return;
@@ -689,17 +447,14 @@ if (canvas) {
                     const phi = (90 - lat) * (Math.PI / 180);
                     const theta = (lon + 180) * (Math.PI / 180);
 
-                    // Apply 3D rotation
                     let x = -radius * Math.sin(phi) * Math.cos(theta - rotationX);
-                    let y = -radius * Math.cos(phi);  // Negated to flip globe right-side up
+                    let y = -radius * Math.cos(phi);
                     let z = radius * Math.sin(phi) * Math.sin(theta - rotationX);
 
-                    // Apply vertical rotation (Y-axis)
                     const tempY = y * Math.cos(rotationY) - z * Math.sin(rotationY);
                     z = y * Math.sin(rotationY) + z * Math.cos(rotationY);
                     y = tempY;
 
-                    // Only draw visible parts
                     if (z > -radius * 0.1) {
                         const screenX = centerX + x;
                         const screenY = centerY + y;
@@ -723,7 +478,6 @@ if (canvas) {
                 ctx.stroke();
             });
         } else if (isLoadingMap) {
-            // Show loading text
             ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
             ctx.font = '14px DM Sans';
             ctx.textAlign = 'center';
@@ -731,60 +485,51 @@ if (canvas) {
             ctx.fillText('Loading map...', centerX, centerY);
         }
 
-        // Draw visited locations with glowing pins (360° visible)
         let tempHoveredLocation = null;
         visitedLocations.forEach(location => {
             const phi = (90 - location.lat) * (Math.PI / 180);
             const theta = (location.lon + 180) * (Math.PI / 180);
 
-            // Apply 3D rotation
             let x = -radius * Math.sin(phi) * Math.cos(theta - rotationX);
-            let y = -radius * Math.cos(phi);  // Negated to flip globe right-side up
+            let y = -radius * Math.cos(phi);
             let z = radius * Math.sin(phi) * Math.sin(theta - rotationX);
 
-            // Apply vertical rotation (Y-axis)
             const tempY = y * Math.cos(rotationY) - z * Math.sin(rotationY);
             z = y * Math.sin(rotationY) + z * Math.cos(rotationY);
             y = tempY;
 
-            // Draw points on visible side (allowing some wrap for 360° view)
             if (z > -radius * 0.1) {
                 const screenX = centerX + x;
                 const screenY = centerY + y;
                 const depth = Math.max(0, (z + radius * 0.1) / (radius * 1.1));
-                const size = 4 + depth * 3;
+                const pinSize = 4 + depth * 3;
 
-                // Check if mouse is hovering over this location
                 if (!isDragging) {
                     const dx = mouseCanvasX - screenX;
                     const dy = mouseCanvasY - screenY;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance < size + 5) {
+                    if (distance < pinSize + 5) {
                         tempHoveredLocation = location;
                         location.screenX = screenX;
                         location.screenY = screenY;
-                        location.size = size;
+                        location.size = pinSize;
                     }
                 }
 
-                // Glow effect
                 ctx.shadowBlur = 20;
                 ctx.shadowColor = `rgba(255, 200, 100, ${0.6 + depth * 0.4})`;
 
-                // Draw pin
                 ctx.beginPath();
-                ctx.arc(screenX, screenY, size, 0, Math.PI * 2);
+                ctx.arc(screenX, screenY, pinSize, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(255, 200, 100, ${0.7 + depth * 0.3})`;
                 ctx.fill();
 
-                // Inner bright core
                 ctx.beginPath();
-                ctx.arc(screenX, screenY, size * 0.5, 0, Math.PI * 2);
+                ctx.arc(screenX, screenY, pinSize * 0.5, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(255, 240, 180, ${0.8 + depth * 0.2})`;
                 ctx.fill();
 
                 ctx.shadowBlur = 0;
-
                 location.visible = true;
             } else {
                 location.visible = false;
@@ -793,7 +538,6 @@ if (canvas) {
 
         hoveredLocation = tempHoveredLocation;
 
-        // Draw tooltip if hovering
         if (hoveredLocation && hoveredLocation.visible) {
             const paddingH = 12;
             const paddingV = 8;
@@ -808,17 +552,14 @@ if (canvas) {
             const tooltipWidth = textWidth + paddingH * 2;
             const tooltipHeight = fontSize + paddingV * 2;
 
-            // Draw shadow/glow
             ctx.shadowBlur = 15;
             ctx.shadowColor = 'rgba(255, 200, 100, 0.4)';
 
-            // Tooltip background with rounded corners
             ctx.fillStyle = 'rgba(10, 10, 15, 0.95)';
             ctx.beginPath();
             ctx.roundRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight, borderRadius);
             ctx.fill();
 
-            // Gradient border
             const borderGradient = ctx.createLinearGradient(
                 tooltipX, tooltipY,
                 tooltipX + tooltipWidth, tooltipY + tooltipHeight
@@ -835,7 +576,6 @@ if (canvas) {
 
             ctx.shadowBlur = 0;
 
-            // Draw small triangle pointer
             const arrowSize = 5;
             const arrowX = hoveredLocation.screenX;
             const arrowY = tooltipY + tooltipHeight;
@@ -848,7 +588,6 @@ if (canvas) {
             ctx.closePath();
             ctx.fill();
 
-            // Tooltip text with gradient
             const textGradient = ctx.createLinearGradient(
                 tooltipX, tooltipY,
                 tooltipX + tooltipWidth, tooltipY + tooltipHeight
@@ -866,7 +605,6 @@ if (canvas) {
             );
         }
 
-        // Draw atmosphere glow
         const atmosphereGradient = ctx.createRadialGradient(
             centerX, centerY, radius * 0.95,
             centerX, centerY, radius * 1.15
@@ -880,7 +618,6 @@ if (canvas) {
         ctx.fillStyle = atmosphereGradient;
         ctx.fill();
 
-        // Draw Earth outline
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
         ctx.strokeStyle = 'rgba(100, 150, 200, 0.4)';
@@ -888,19 +625,13 @@ if (canvas) {
         ctx.stroke();
     }
 
-    // Animation loop
     function animate() {
-        // Apply velocity and auto-rotation (horizontal only)
         rotationX += 0.003 + dragVelocityX;
-
-        // Apply friction
         dragVelocityX *= 0.95;
-
         drawGlobe();
         requestAnimationFrame(animate);
     }
 
-    // Mouse interaction with full 360° support
     canvas.addEventListener('mousedown', (e) => {
         if (!isDraggingDivider) {
             isDragging = true;
@@ -911,7 +642,6 @@ if (canvas) {
         }
     });
 
-    // Track mouse position on canvas
     canvas.addEventListener('mousemove', (e) => {
         const rect = canvas.getBoundingClientRect();
         mouseCanvasX = e.clientX - rect.left;
@@ -919,12 +649,11 @@ if (canvas) {
 
         if (isDragging) {
             const deltaX = e.clientX - lastX;
-            dragVelocityX = -deltaX * 0.005;  // Negated for reversed drag
+            dragVelocityX = -deltaX * 0.005;
             rotationX += dragVelocityX;
             lastX = e.clientX;
             canvas.style.cursor = 'grabbing';
         } else {
-            // Cursor will be set by drawGlobe based on hover state
             if (hoveredLocation) {
                 canvas.style.cursor = 'pointer';
             } else {
@@ -936,7 +665,7 @@ if (canvas) {
     document.addEventListener('mousemove', (e) => {
         if (isDragging && !isDraggingDivider) {
             const deltaX = e.clientX - lastX;
-            dragVelocityX = -deltaX * 0.005;  // Negated for reversed drag
+            dragVelocityX = -deltaX * 0.005;
             rotationX += dragVelocityX;
             lastX = e.clientX;
         }
@@ -948,7 +677,6 @@ if (canvas) {
         }
     });
 
-    // Touch support for mobile
     canvas.addEventListener('touchstart', (e) => {
         isDragging = true;
         lastX = e.touches[0].clientX;
@@ -961,7 +689,7 @@ if (canvas) {
     canvas.addEventListener('touchmove', (e) => {
         if (isDragging) {
             const deltaX = e.touches[0].clientX - lastX;
-            dragVelocityX = -deltaX * 0.005;  // Negated for reversed drag
+            dragVelocityX = -deltaX * 0.005;
             rotationX += dragVelocityX;
             lastX = e.touches[0].clientX;
         }
@@ -972,81 +700,38 @@ if (canvas) {
         isDragging = false;
     });
 
-    // Start animation
     animate();
 }
 
-// Chat functionality
-const chatToggle = document.getElementById('chatToggle');
-const chatContainer = document.getElementById('chatContainer');
-const chatClose = document.getElementById('chatClose');
-const chatInput = document.getElementById('chatInput');
-const chatSend = document.getElementById('chatSend');
-const chatMessages = document.getElementById('chatMessages');
-
-// Only set up chat if elements exist
-if (chatToggle && chatContainer && chatClose && chatInput && chatSend && chatMessages) {
-    // Toggle chat
-    chatToggle.addEventListener('click', () => {
-        chatContainer.classList.toggle('active');
-        if (chatContainer.classList.contains('active')) {
-            chatInput.focus();
-            // Hide notification badge when chat is opened
-            const notification = document.querySelector('.chat-notification');
-            if (notification) {
-                notification.style.display = 'none';
-            }
-        }
-    });
-
-    // Close chat
-    chatClose.addEventListener('click', () => {
-        chatContainer.classList.remove('active');
-    });
-
-    // Send message function
-    function sendMessage() {
-        const message = chatInput.value.trim();
-        if (message === '') return;
-
-        // Add user message
-        const userMessage = document.createElement('div');
-        userMessage.className = 'chat-message user-message';
-        userMessage.innerHTML = `<p>${message}</p>`;
-        chatMessages.appendChild(userMessage);
-
-        // Clear input
-        chatInput.value = '';
-
-        // Scroll to bottom
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-
-        // Fun bot responses
-        const responses = [
-            "I appreciate the effort, but I'm literally just CSS and JavaScript 😅",
-            "Bold of you to assume I can read! Try <a href='mailto:kiaraplds@hotmail.com'>email</a> instead ✉️",
-            "I'm flattered, but I'm not that kind of chatbot. Real talk? <a href='https://www.linkedin.com/in/kiara-polychroniadi' target='_blank'>LinkedIn</a> me!",
-            "Still here? Okay fine, send it to <a href='mailto:kiaraplds@hotmail.com'>kiaraplds@hotmail.com</a> 📧",
-            "Look, I'm beautiful AND useless. <a href='https://www.linkedin.com/in/kiara-polychroniadi' target='_blank'>LinkedIn</a> is where the magic happens ✨"
-        ];
-
-        setTimeout(() => {
-            const botMessage = document.createElement('div');
-            botMessage.className = 'chat-message bot-message';
-            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-            botMessage.innerHTML = `<p>${randomResponse}</p>`;
-            chatMessages.appendChild(botMessage);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }, 800);
+// ===================================
+// RESPONSIVE CHECK
+// ===================================
+function checkResponsive() {
+    if (!divider || !techSide || !artSide) return;
+    
+    if (window.innerWidth <= 1024) {
+        divider.style.display = 'none';
+        techSide.style.flex = '';
+        artSide.style.flex = '';
+        techSide.style.width = '';
+        artSide.style.width = '';
+        divider.style.left = '50%';
+    } else {
+        divider.style.display = 'flex';
     }
-
-    // Send on button click
-    chatSend.addEventListener('click', sendMessage);
-
-    // Send on Enter key
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
-    });
 }
+
+window.addEventListener('resize', checkResponsive);
+checkResponsive();
+
+// ===================================
+// INITIAL LOAD
+// ===================================
+window.addEventListener('load', () => {
+    document.body.style.opacity = '1';
+});
+
+// Console easter egg
+console.log('%c👨‍💻 + 🎨 = ✨', 'font-size: 24px; font-weight: bold; background: linear-gradient(to right, #a8c9d1, #c9a961); -webkit-background-clip: text; color: transparent;');
+console.log('%cWelcome to the intersection of code and creativity!', 'font-size: 14px; color: #a8c9d1;');
+console.log('%cData by day, canvas by night.', 'font-size: 14px; color: #c9a961; font-style: italic;');

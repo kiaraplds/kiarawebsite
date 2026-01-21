@@ -6,77 +6,330 @@
     <title>Kiara Polychroniadi - Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=darker-blue-grey">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=green-buttons">
 </head>
 <body>
-    <div class="container">
-        <!-- Main Content Grid -->
-        <div class="main-grid">
-            <!-- Center - Hero Name -->
-            <div class="center-hero">
-                <h1 class="hero-name">Kiara</h1>
-                <p class="hero-lastname">Polychroniadi</p>
-                <p class="hero-tagline">Choose how to view my website</p>
+    <!-- Download CV button -->
+    <a href="KiaraPolychroniadi_CV_2025.pdf" download class="cv-download-btn">Download CV</a>
+
+    <!-- Hero Section - First View -->
+    <section class="hero-section" id="heroSection">
+        <!-- Social Links at Top -->
+        <div class="hero-social-links">
+            <a href="https://www.linkedin.com/in/kiara-polychroniadi" target="_blank" rel="noopener noreferrer" class="hero-social-link">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="currentColor"/>
+                </svg>
+            </a>
+            <a href="https://www.behance.net/kiarapldscb22" target="_blank" rel="noopener noreferrer" class="hero-social-link">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 3.211 3.483 3.312 4.588 2.029h3.168zm-7.686-4h4.965c-.105-1.547-1.136-2.219-2.477-2.219-1.466 0-2.277.768-2.488 2.219zm-9.574 6.988H0V5.021h6.953c5.476.081 5.58 5.444 2.72 6.906 3.461 1.26 3.577 8.061-3.207 8.061zM3 11h3.584c2.508 0 2.906-3-.312-3H3v3zm3.391 3H3v3.016h3.341c3.055 0 2.868-3.016.05-3.016z" fill="currentColor"/>
+                </svg>
+            </a>
+            <a href="https://kiaraaplds.myportfolio.com/" target="_blank" rel="noopener noreferrer" class="hero-social-link">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="currentColor"/>
+                </svg>
+            </a>
+            <a href="mailto:kiaraplds@hotmail.com" class="hero-social-link">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor"/>
+                </svg>
+            </a>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-name">Kiara</h1>
+            <p class="hero-lastname">Polychroniadi</p>
+            <p class="hero-tagline">Creative Solutions Engineer, Passionated by AI</p>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator" id="scrollIndicator">
+            <span class="scroll-text">Scroll to explore</span>
+            <div class="scroll-arrow">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 5V19M12 19L5 12M12 19L19 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dual Identity Section -->
+    <section class="dual-section" id="dualSection">
+        <div class="dual-container">
+            <!-- Left Side: Tech/Data -->
+            <div class="side tech-side" id="techSide">
+                <div class="side-content">
+                    <div class="section hero-section-inner">
+                        <h1 class="side-title">Computer Scientist</h1>
+                        <p class="side-subtitle">AI • Solutions Engineering</p>
+
+                        <div class="code-block">
+                            <span class="code-line"><span class="keyword">const</span> <span class="variable">kiara</span> = {</span>
+                            <span class="code-line">  <span class="property">role</span>: <span class="string">"Solutions Engineer"</span>,</span>
+                            <span class="code-line">  <span class="property">company</span>: <span class="string">"@ThoughtSpot"</span>,</span>
+                            <span class="code-line">  <span class="property">experience</span>: <span class="string">"5+ years"</span>,</span>
+                            <span class="code-line">  <span class="property">passion</span>: <span class="string">"tech, data & ai"</span></span>
+                            <span class="code-line">};</span>
+                        </div>
+                    </div>
+
+                    <div class="section technical-skills-section">
+                        <h2 class="section-heading">Technical Skills</h2>
+                        <div class="skills-list">
+                            <div class="skill-item" data-skill="solutions">
+                                Solutions Engineering
+                            </div>
+                            <div class="skill-item" data-skill="ai">
+                                AI & MCP Development
+                            </div>
+                            <div class="skill-item" data-skill="data">
+                                Data Analytics
+                            </div>
+                            <div class="skill-item" data-skill="engineering">
+                                Data Engineering
+                            </div>
+                            <div class="skill-item" data-skill="python">
+                                Programming
+                            </div>
+                            <div class="skill-item" data-skill="platforms">
+                                Platforms & Tools
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-heading">Philosophy</h2>
+                        <div class="philosophy-card">
+                            <p>I am always eager to learn and consider myself a fast learner. I require minimum training to learn a new program or platform.</p>
+                            <p>I have strong organizing skills and enjoy time management in order to achieve all my tasks and goals. That is when I feel the most accomplished.</p>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-heading">Journey</h2>
+                        <div class="journey-timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <h3>Athens, Greece</h3>
+                                    <p>Born and raised in a multicultural family (French & Greek)</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <h3>Bath, UK</h3>
+                                    <p>Undergraduate studies in Computer Science</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item current-location">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <h3>London, UK <span class="location-badge">Current</span></h3>
+                                    <p>Currently working @ThoughtSpot</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-heading">Languages</h2>
+                        <div class="languages-grid">
+                            <div class="language-card" data-proficiency="Native">
+                                <div class="lang-flag">🇬🇷</div>
+                                <span>Greek</span>
+                                <div class="language-tooltip">Native</div>
+                            </div>
+                            <div class="language-card" data-proficiency="Native">
+                                <div class="lang-flag">🇫🇷</div>
+                                <span>French</span>
+                                <div class="language-tooltip">Native</div>
+                            </div>
+                            <div class="language-card" data-proficiency="Native">
+                                <div class="lang-flag">🇬🇧</div>
+                                <span>English</span>
+                                <div class="language-tooltip">Native</div>
+                            </div>
+                            <div class="language-card" data-proficiency="Intermediate">
+                                <div class="lang-flag">🇪🇸</div>
+                                <span>Spanish</span>
+                                <div class="language-tooltip">Intermediate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Cards Row -->
-            <div class="cards-row">
-                <!-- Left Card - Before AI -->
-                <div class="journey-card before-ai" id="beforeWidget">
-                    <div class="card-arrow">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M19 12H5M5 12L12 5M5 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h2 class="card-title">Before AI</h2>
-                    <p class="card-subtitle">Travel into a time before AI</p>
-                    <div class="card-line"></div>
+            <!-- Center Divider -->
+            <div class="divider" id="divider">
+                <div class="divider-line"></div>
+                <div class="divider-handle">
+                    <div class="handle-icon">⟷</div>
                 </div>
+            </div>
 
-                <!-- Right Card - After AI -->
-                <div class="journey-card after-ai" id="afterWidget">
-                    <div class="card-arrow">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+            <!-- Right Side: Art/Creativity -->
+            <div class="side art-side" id="artSide">
+                <div class="side-content">
+                    <div class="section hero-section-inner">
+                        <h1 class="side-title">Artist</h1>
+                        <p class="side-subtitle">Painter • Creative Soul</p>
+
+                        <div class="art-statement">
+                            <div class="brush-stroke"></div>
+                            <p class="statement-text">I am passionate about art and paint in my free time</p>
+                        </div>
                     </div>
-                    <h2 class="card-title">After AI</h2>
-                    <p class="card-subtitle">Jump into the future of creativity</p>
-                    <div class="card-line"></div>
+
+                    <div class="section">
+                        <h2 class="section-heading">Portfolio Sneak Peek</h2>
+                        <div class="portfolio-grid">
+                            <div class="portfolio-item">
+                                <div class="portfolio-card" onclick="openLightbox('IMG_6602.jpg')">
+                                    <div class="art-preview">
+                                        <img src="IMG_6602.jpg" alt="Artwork 1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="portfolio-item">
+                                <div class="portfolio-card" onclick="openLightbox('IMG_6603.jpg')">
+                                    <div class="art-preview">
+                                        <img src="IMG_6603.jpg" alt="Artwork 2">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="portfolio-item">
+                                <div class="portfolio-card" onclick="openLightbox('IMG_6604.jpg')">
+                                    <div class="art-preview">
+                                        <img src="IMG_6604.jpg" alt="Artwork 3">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="portfolio-item">
+                                <div class="portfolio-card" onclick="openLightbox('IMG_6606.jpg')">
+                                    <div class="art-preview">
+                                        <img src="IMG_6606.jpg" alt="Artwork 4">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-cta">
+                            <a href="https://www.behance.net/kiarapldscb22/projects" target="_blank" rel="noopener noreferrer" class="view-portfolio-btn">
+                                View Full Portfolio →
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-heading">Creative Expression</h2>
+                        <div class="art-description">
+                            <p>Art is where I find balance and freedom. Through painting, I explore colors, textures, and emotions that complement my analytical mind.</p>
+                            <p>My portfolio showcases pieces that blend traditional techniques with modern perspectives including painting on tablet or something mixing digital with traditional mediums.</p>
+                            <p>In the past few months, I have been experimenting with Agentic experiences, creating web portals with agents and LLMs. I have been using ClaudeCode and Claude Sonnet on Cursor to create websites and apps, adding my creative touch and direction.</p>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-heading">Inspiration</h2>
+                        <div class="globe-container">
+                            <canvas id="globeCanvas"></canvas>
+                            <div class="globe-caption">
+                                <span class="caption-item"><span class="caption-icon">✈️</span> Travel</span>
+                                <span class="caption-separator">•</span>
+                                <span class="caption-item"><span class="caption-icon">🌍</span> Cultures</span>
+                                <span class="caption-separator">•</span>
+                                <span class="caption-item"><span class="caption-icon">🎨</span> Color</span>
+                            </div>
+                            <p class="travel-inspiration">
+                                Traveling opens my mind to new perspectives and cultures, each destination adding vibrant colors to my creative palette and deepening my understanding of the world's beautiful diversity.
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Footer with links -->
-        <footer class="footer">
-            <div class="copyright">© 2025 Kiara Polychroniadi</div>
-            <div class="social-links">
-                <a href="https://www.linkedin.com/in/kiara-polychroniadi" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16 8C17.5913 8 19.1174 8.63214 20.2426 9.75736C21.3679 10.8826 22 12.4087 22 14V21H18V14C18 13.4696 17.7893 12.9609 17.4142 12.5858C17.0391 12.2107 16.5304 12 16 12C15.4696 12 14.9609 12.2107 14.5858 12.5858C14.2107 12.9609 14 13.4696 14 14V21H10V14C10 12.4087 10.6321 10.8826 11.7574 9.75736C12.8826 8.63214 14.4087 8 16 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M6 9H2V21H6V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M4 6C5.10457 6 6 5.10457 6 4C6 2.89543 5.10457 2 4 2C2.89543 2 2 2.89543 2 4C2 5.10457 2.89543 6 4 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
-                <a href="https://www.behance.net/kiarapldscb22" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Behance">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3.5 8C3.5 6.067 5.067 4.5 7 4.5H10C11.933 4.5 13.5 6.067 13.5 8C13.5 9.933 11.933 11.5 10 11.5H3.5V8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M3.5 11.5H11C12.933 11.5 14.5 13.067 14.5 15C14.5 16.933 12.933 18.5 11 18.5H3.5V11.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M16 7H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M18.5 10C20.433 10 22 11.567 22 13.5C22 15.433 20.433 17 18.5 17C16.567 17 15 15.433 15 13.5C15 11.567 16.567 10 18.5 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M15 13.5H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
-                <a href="mailto:kiaraplds@hotmail.com" class="social-icon" aria-label="Email">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
-            </div>
-        </footer>
+    <!-- Blend overlay effect -->
+    <div class="blend-overlay" id="blendOverlay"></div>
+
+    <!-- Image Lightbox Modal -->
+    <div class="lightbox-modal" id="lightboxModal">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightboxImage" alt="Artwork">
     </div>
+
+    <!-- Skill Popups -->
+    <div class="skill-popup" id="popup-solutions">
+        <span class="popup-close">&times;</span>
+        <h3>Solutions Engineering</h3>
+        <p>My current role, leading complex POCs across EMEA at ThoughtSpot, influencing six-figure ACV revenue through technical validation and executive-level evaluations. Key wins include Canal+ Global, Telegram, Rimowa, Tottenham Hotspurs, and Booking.com.</p>
+    </div>
+
+    <div class="skill-popup" id="popup-ai">
+        <span class="popup-close">&times;</span>
+        <h3>AI & MCP Development</h3>
+        <p>I love learning new ways of using AI and MCP to create new content, utilising it in my work and helping enterprises built safe, hallucination free agents in their workflows. Using MCPs has really changed the way I think about the future of Agentic and autonomous workdlows, while AI continues to amaze me - I try to take advantage of it and expand my creativity.</p>
+    </div>
+
+    <div class="skill-popup" id="popup-data">
+        <span class="popup-close">&times;</span>
+        <h3>Data Analytics</h3>
+        <p>During my time at the University of Bath, studying Computer Science, I truly fell in love with one subject: Data. This was back then split in two modules: Python Pandas, and SQL. I understood the importance and cruciality of data and immediately grasped the opportunity to work in this industry. If you don't believe me, I have a whole section on why "I Love Data" from 4 years ago (pre- Ai): https://kiaraaplds.myportfolio.com/nfts</p>
+    </div>
+
+    <div class="skill-popup" id="popup-engineering">
+        <span class="popup-close">&times;</span>
+        <h3>Data Engineering</h3>
+        <p>Led cloud-native data automation architecture using AWS (Redshift, Lambda, S3) at Alexander McQueen. I have heavy experience with Semantic Layer Modeling, Reverse Engineering, CDWs such as Snowflake, Databricks, Redshift, but also tools such as DBT. Data prep is number one priority in my current role, and have spend hours looking at schemas and optimised databases for Analytics & AI !</p>
+    </div>
+
+    <div class="skill-popup" id="popup-python">
+        <span class="popup-close">&times;</span>
+        <h3>Programming</h3>
+        <p> Pre-AI: Python, SQL, JavaScript, HTML, CSS, APIs, and Automation. Built complex forecasting scripts, automated processes for stakeholders, and presented strategy decks to VPs and CEOs on data-driven insights.</p>
+    </div>
+
+    <div class="skill-popup" id="popup-platforms">
+        <span class="popup-close">&times;</span>
+        <h3>Platforms & Tools</h3>
+        <p>ThoughtSpot, AWS Cloud Services, Snowflake, Databricks, DBT, Claude Code, Cursor, MCP Servers, and Adobe Creative Cloud (PhotoShop)</p>
+    </div>
+
+    <!-- Contact footer -->
+    <footer class="site-footer">
+        <div class="footer-copyright">© 2026 Kiara Polychroniadi</div>
+        <div class="footer-links">
+            <a href="https://www.linkedin.com/in/kiara-polychroniadi" target="_blank" rel="noopener noreferrer" class="footer-link">
+                <svg class="footer-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="currentColor"/>
+                </svg>
+                <span>LinkedIn</span>
+            </a>
+            <a href="https://www.behance.net/kiarapldscb22" target="_blank" rel="noopener noreferrer" class="footer-link">
+                <svg class="footer-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 3.211 3.483 3.312 4.588 2.029h3.168zm-7.686-4h4.965c-.105-1.547-1.136-2.219-2.477-2.219-1.466 0-2.277.768-2.488 2.219zm-9.574 6.988H0V5.021h6.953c5.476.081 5.58 5.444 2.72 6.906 3.461 1.26 3.577 8.061-3.207 8.061zM3 11h3.584c2.508 0 2.906-3-.312-3H3v3zm3.391 3H3v3.016h3.341c3.055 0 2.868-3.016.05-3.016z" fill="currentColor"/>
+                </svg>
+                <span>Behance</span>
+            </a>
+            <a href="https://kiaraaplds.myportfolio.com/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                <svg class="footer-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="currentColor"/>
+                </svg>
+                <span>Old Portfolio</span>
+            </a>
+            <a href="mailto:kiaraplds@hotmail.com" class="footer-link">
+                <svg class="footer-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor"/>
+                </svg>
+                <span>Email</span>
+            </a>
+        </div>
+    </footer>
 
     <!-- Chat Box -->
     <div class="chat-container" id="chatContainer">
@@ -109,152 +362,6 @@
         </svg>
         <span class="chat-notification">1</span>
     </button>
-
-    <!-- Transition overlay for animations -->
-    <div class="transition-overlay" id="transitionOverlay">
-        <!-- Rocket for forward time travel -->
-        <div class="rocket-container" id="rocketContainer">
-            <svg viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg">
-                <!-- Stars in background -->
-                <g id="stars">
-                    <circle cx="50" cy="100" r="2" fill="#a8c9d1" opacity="0.8"/>
-                    <circle cx="150" cy="80" r="1.5" fill="#8ab4f8" opacity="0.6"/>
-                    <circle cx="550" cy="120" r="2" fill="#a8c9d1" opacity="0.7"/>
-                    <circle cx="100" cy="200" r="1" fill="#8ab4f8" opacity="0.5"/>
-                    <circle cx="500" cy="180" r="2.5" fill="#a8c9d1" opacity="0.9"/>
-                    <circle cx="80" cy="300" r="1.5" fill="#8ab4f8" opacity="0.6"/>
-                    <circle cx="520" cy="280" r="2" fill="#a8c9d1" opacity="0.8"/>
-                </g>
-
-                <!-- Rocket body -->
-                <g id="rocket" transform="translate(300, 600)">
-                    <!-- Main body -->
-                    <rect x="-30" y="-80" width="60" height="120" fill="#a8c9d1" rx="5"/>
-                    <rect x="-25" y="-75" width="50" height="110" fill="#6ba3b8" rx="3"/>
-
-                    <!-- Nose cone -->
-                    <path d="M -30 -80 L 0 -140 L 30 -80 Z" fill="#8ab4f8"/>
-                    <path d="M -20 -80 L 0 -130 L 20 -80 Z" fill="#a8c9d1"/>
-
-                    <!-- Window -->
-                    <circle cx="0" cy="-40" r="15" fill="#1a3a4a" opacity="0.8"/>
-                    <circle cx="0" cy="-40" r="12" fill="#4a6b7a" opacity="0.6"/>
-                    <circle cx="-5" cy="-45" r="4" fill="#8ab4f8" opacity="0.4"/>
-
-                    <!-- Details/panels -->
-                    <rect x="-28" y="-20" width="56" height="2" fill="#4a6b7a" opacity="0.5"/>
-                    <rect x="-28" y="0" width="56" height="2" fill="#4a6b7a" opacity="0.5"/>
-                    <rect x="-28" y="20" width="56" height="2" fill="#4a6b7a" opacity="0.5"/>
-
-                    <!-- Fins -->
-                    <path d="M -30 20 L -60 50 L -30 40 Z" fill="#8ab4f8"/>
-                    <path d="M 30 20 L 60 50 L 30 40 Z" fill="#8ab4f8"/>
-
-                    <!-- Engine -->
-                    <rect x="-25" y="35" width="50" height="15" fill="#4a6b7a"/>
-                    <rect x="-20" y="45" width="40" height="8" fill="#2a3a4a"/>
-                </g>
-
-                <!-- Flames/exhaust -->
-                <g id="flames" transform="translate(300, 655)">
-                    <!-- Main flame -->
-                    <path d="M -15 0 Q -20 15 -10 30 Q 0 45 0 60 Q 0 45 10 30 Q 20 15 15 0 Z"
-                          fill="url(#flameGradient1)" opacity="0.9"/>
-                    <path d="M -8 0 Q -10 15 -5 25 Q 0 35 0 45 Q 0 35 5 25 Q 10 15 8 0 Z"
-                          fill="url(#flameGradient2)" opacity="0.8"/>
-
-                    <!-- Side flames -->
-                    <path d="M -18 5 Q -22 12 -18 20 Q -15 25 -15 30 Z"
-                          fill="url(#flameGradient1)" opacity="0.6"/>
-                    <path d="M 18 5 Q 22 12 18 20 Q 15 25 15 30 Z"
-                          fill="url(#flameGradient1)" opacity="0.6"/>
-                </g>
-
-                <!-- Gradients for flames -->
-                <defs>
-                    <linearGradient id="flameGradient1" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" style="stop-color:#8ab4f8;stop-opacity:1" />
-                        <stop offset="50%" style="stop-color:#a8c9d1;stop-opacity:0.8" />
-                        <stop offset="100%" style="stop-color:#6ba3b8;stop-opacity:0.3" />
-                    </linearGradient>
-                    <linearGradient id="flameGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.9" />
-                        <stop offset="50%" style="stop-color:#8ab4f8;stop-opacity:0.6" />
-                        <stop offset="100%" style="stop-color:#a8c9d1;stop-opacity:0.2" />
-                    </linearGradient>
-                </defs>
-
-                <!-- Smoke particles -->
-                <g id="smoke">
-                    <circle id="smoke1" cx="290" cy="680" r="8" fill="#6ba3b8" opacity="0.3"/>
-                    <circle id="smoke2" cx="310" cy="690" r="10" fill="#6ba3b8" opacity="0.25"/>
-                    <circle id="smoke3" cx="295" cy="700" r="12" fill="#6ba3b8" opacity="0.2"/>
-                    <circle id="smoke4" cx="305" cy="710" r="14" fill="#6ba3b8" opacity="0.15"/>
-                </g>
-            </svg>
-        </div>
-
-        <!-- Dual gears portal for backward time travel -->
-        <div class="portal-gears" id="portalGears">
-            <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
-                <!-- Background elements (portal circle and glow) -->
-                <g id="portalBackground">
-                    <!-- Portal glow effect (background layer) -->
-                    <circle id="portalGlow" cx="400" cy="300" r="0" fill="#1a1a1a" opacity="0"/>
-                    <!-- Portal opening (glowing circle that expands from center) -->
-                    <circle id="portalCircle" cx="400" cy="300" r="0" fill="none" stroke="#8bb4c9" stroke-width="4" opacity="0"/>
-                </g>
-
-                <!-- Right Gear (larger) - 12 uniform teeth - Moved closer to center -->
-                <g id="rightGear">
-                    <!-- Main gear body circle -->
-                    <circle cx="480" cy="300" r="80" fill="#5a5a5a" stroke="#000000" stroke-width="3"/>
-
-                    <!-- 12 teeth evenly distributed -->
-                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(0 480 300)"/>
-                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(30 480 300)"/>
-                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(60 480 300)"/>
-                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(90 480 300)"/>
-                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(120 480 300)"/>
-                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(150 480 300)"/>
-                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(180 480 300)"/>
-                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(210 480 300)"/>
-                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(240 480 300)"/>
-                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(270 480 300)"/>
-                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(300 480 300)"/>
-                    <rect x="475" y="210" width="10" height="20" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(330 480 300)"/>
-
-                    <!-- Inner ring for depth -->
-                    <circle cx="480" cy="300" r="55" fill="#3a3a3a" stroke="#000000" stroke-width="2"/>
-                    <!-- Center hole -->
-                    <circle cx="480" cy="300" r="28" fill="#2a2a2a" stroke="#000000" stroke-width="2"/>
-                </g>
-
-                <!-- Left Gear (smaller) - 10 uniform teeth - Moved closer to center -->
-                <g id="leftGear">
-                    <!-- Main gear body circle -->
-                    <circle cx="320" cy="300" r="60" fill="#5a5a5a" stroke="#000000" stroke-width="3"/>
-
-                    <!-- 10 teeth evenly distributed -->
-                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(0 320 300)"/>
-                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(36 320 300)"/>
-                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(72 320 300)"/>
-                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(108 320 300)"/>
-                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(144 320 300)"/>
-                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(180 320 300)"/>
-                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(216 320 300)"/>
-                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(252 320 300)"/>
-                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(288 320 300)"/>
-                    <rect x="315" y="233" width="10" height="17" fill="#5a5a5a" stroke="#000000" stroke-width="2" transform="rotate(324 320 300)"/>
-
-                    <!-- Inner ring for depth -->
-                    <circle cx="320" cy="300" r="40" fill="#3a3a3a" stroke="#000000" stroke-width="2"/>
-                    <!-- Center hole -->
-                    <circle cx="320" cy="300" r="22" fill="#2a2a2a" stroke="#000000" stroke-width="2"/>
-                </g>
-            </svg>
-        </div>
-    </div>
 
     <script src="script.js"></script>
 </body>
