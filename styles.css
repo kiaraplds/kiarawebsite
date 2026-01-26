@@ -701,6 +701,10 @@ body {
     transition: all 0.3s ease;
     position: relative;
     cursor: default;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .language-card:hover {
@@ -710,17 +714,10 @@ body {
 }
 
 .lang-flag {
-    width: 36px;
-    height: 27px;
-    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
     border-radius: 4px;
-    overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.lang-flag svg {
-    width: 100%;
-    height: 100%;
     display: block;
 }
 
@@ -1792,8 +1789,7 @@ body {
     }
     
     .lang-flag {
-        width: 32px;
-        height: 24px;
+        font-size: 2rem;
     }
 
     .journey-timeline {
@@ -2029,9 +2025,8 @@ body {
     }
     
     .lang-flag {
-        width: 28px;
-        height: 21px;
-        margin-bottom: 0.25rem;
+        font-size: 1.75rem;
+        margin-bottom: 0.35rem;
     }
     
     .language-card span {
